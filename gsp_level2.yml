@@ -1,0 +1,525 @@
+version: 0.0.5
+level: Level 2 – Verified
+categories:
+  - category: Governance & Culture
+    requirements:
+      - id: GSP-L2-GOV-01
+        title: Organisational Awareness of Software Sustainability
+        requirement: >
+          The organisation shall promote internal awareness of software
+          sustainability principles among relevant stakeholders.
+        rationale: >
+          Awareness is a foundational step toward adopting sustainable software
+          practices and enabling organisational change.
+        evidence_examples:
+          - Internal presentations or training materials
+          - Awareness campaigns
+          - Sustainability onboarding content
+          - Internal knowledge base or documentation
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 2
+      - id: GSP-L2-GOV-02
+        title: Sustainability in Technical Decision-Making
+        requirement: >
+          The organisation shall consider sustainability aspects when making
+          technical decisions related to software development and operation.
+        rationale: Embedding sustainability into decision-making ensures environmental considerations influence system design and evolution.
+        evidence_examples:
+          - Architecture decision records (ADRs) referencing sustainability
+          - Decision guidelines including sustainability criteria
+          - Design review checklists
+          - Trade-off analyses considering resource efficiency
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+      - id: GSP-L2-GOV-03
+        title: Developer Engagement in Resource-Efficient Practices
+        requirement: >
+          The organisation shall encourage developers and technical staff to
+          actively consider resource efficiency as part of their everyday
+          software development activities.
+        rationale: >
+          Embedding resource efficiency awareness at the individual developer
+          level ensures sustainability considerations are applied consistently
+          throughout the development lifecycle, not only at formal decision points.
+        evidence_examples:
+          - Code review checklists including resource efficiency criteria
+          - Internal communities of practice focused on green software
+          - Team or department-level efficiency goals
+          - Recognition programmes or incentives for sustainability contributions
+          - Developer guidelines referencing efficiency expectations
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 2
+      - id: GSP-L2-GOV-04
+        title: Communication of Sustainability Goals
+        requirement: >
+          The organisation shall communicate sustainability-related
+          goals or ambitions internally.
+        rationale: >
+          Clear communication aligns teams and supports
+          coordinated sustainability efforts.
+        evidence_examples:
+          - Internal sustainability strategy
+          - Company OKRs or KPIs including sustainability
+          - Internal newsletters or announcements
+          - Roadmaps including sustainability objectives
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 2
+      - id: GSP-L2-GOV-05
+        title: Assigned Responsibility for Software Sustainability
+        requirement: >
+          The organisation shall assign responsibility for promoting or
+          coordinating software sustainability initiatives.
+        rationale: >
+          Defined accountability increases effectiveness and continuity
+          of sustainability efforts.
+        evidence_examples:
+          - Role descriptions
+          - Sustainability working group or committee
+          - Named sustainability champion
+          - Governance structure diagrams
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+  - category: Training & Knowledge
+    completion_rules:
+      minimum_total_score: 7
+      minimum_core_requirements: 2
+      allow_partial_credit: true
+    requirements:
+      - id: GSP-L2-TRN-01
+        title: Formal Sustainability Training
+        requirement: >
+          The organisation shall provide structured training on green software
+          and/or green AI practices to relevant roles.
+        rationale: >
+          Structured training ensures sustainability practices are understood
+          and consistently applied across teams.
+        evidence_examples:
+          - Training curriculum or course materials
+          - Training attendance records
+          - Learning management system reports
+          - Training schedules
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+      - id: GSP-L2-TRN-02
+        title: Sustainability Onboarding for Technical Roles
+        requirement: >
+          The organisation shall introduce new technical employees to documented
+          resource-efficient software and AI development guidelines during onboarding.
+        rationale: >
+          Early exposure to sustainability practices increases long-term adoption
+          and consistency in development practices.
+        evidence_examples:
+          - Onboarding documentation
+          - Orientation training materials
+          - Internal developer handbooks
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 2
+
+      - id: GSP-L2-TRN-03
+        title: Sustainability Considerations in Recruitment
+        requirement: >
+          The organisation shall consider sustainability-related software or AI
+          development skills or awareness during recruitment processes for relevant roles.
+        rationale: >
+          Recruiting sustainability-aware personnel accelerates organisational
+          capability in green software development.
+        evidence_examples:
+          - Job descriptions including sustainability competencies
+          - Interview evaluation criteria
+          - Recruitment guidelines
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Supporting
+        weight: 2
+
+      - id: GSP-L2-TRN-04
+        title: Sustainability in Continuous Professional Development
+        requirement: >
+          The organisation shall include resource-efficient software or AI development
+          topics in continuous professional development programs for relevant roles.
+        rationale: >
+          Continuous learning enables teams to adopt evolving sustainability practices
+          and technologies.
+        evidence_examples:
+          - Professional development plans
+          - Training roadmaps
+          - Learning budgets or approved training lists
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 2
+
+      - id: GSP-L2-TRN-05
+        title: Maintained Best Practice Guidelines
+        requirement: >
+          The organisation shall maintain and periodically update documented best
+          practices or internal guidelines for energy-efficient software and AI development.
+        rationale: >
+          Maintaining up-to-date guidance ensures sustainability knowledge is preserved
+          and disseminated across teams.
+        evidence_examples:
+          - Internal guidelines repositories
+          - Version-controlled documentation
+          - Change logs or update records
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+      - id: GSP-L2-TRN-06
+        title: Documentation of Sustainability Improvements
+        requirement: >
+          The organisation shall document energy or performance improvements resulting
+          from software or AI development activities.
+        rationale: >
+          Documenting improvements supports organisational learning and demonstrates
+          measurable sustainability progress.
+        evidence_examples:
+          - Improvement reports
+          - Performance benchmarking records
+          - Post-release evaluations
+          - Sustainability improvement logs
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Supporting
+        weight: 2
+
+  - category: Measurement & Observability
+    requirements:
+      - id: GSP-L2-MEA-01
+        title: Systematic Resource Usage Measurement
+        requirement: >
+          The organisation shall systematically measure and store resource usage
+          metrics for software systems, including at least CPU, memory, storage,
+          or network usage.
+        rationale: >
+          Measuring resource consumption provides the foundation for identifying
+          sustainability improvement opportunities.
+        evidence_examples:
+          - Monitoring system configurations
+          - Observability platform reports
+          - Stored historical metrics
+          - Resource usage logs
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+      - id: GSP-L2-MEA-02
+        title: Energy or Carbon Monitoring
+        requirement: >
+          The organisation shall monitor or estimate energy consumption and/or
+          carbon footprint of software systems using measurement or estimation tools.
+        rationale: >
+          Direct or estimated energy and carbon monitoring enables organisations
+          to assess environmental impact and track sustainability progress.
+        evidence_examples:
+          - Energy measurement tooling
+          - Carbon estimation platforms
+          - Sustainability reporting dashboards
+          - Energy or emissions reports
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 4
+
+      - id: GSP-L2-MEA-03
+        title: Automated Sustainability Observability
+        requirement: >
+          The organisation shall maintain automated dashboards or tooling that
+          continuously visualise and/or alert on resource usage or sustainability-related metrics.
+        rationale: >
+          Continuous observability enables timely detection of inefficiencies
+          and supports proactive sustainability management.
+        evidence_examples:
+          - Monitoring dashboards
+          - Alerting configurations
+          - Integrated observability tooling
+          - Incident response workflows related to resource usage
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+      - id: GSP-L2-MEA-04
+        title: Resource Usage Attribution Capability
+        requirement: >
+          The organisation shall attribute software resource usage and/or energy
+          consumption to identifiable software components, systems, or infrastructure layers.
+        rationale: >
+          Attribution enables targeted optimisation efforts and improves
+          accountability for sustainability improvements.
+        evidence_examples:
+          - Service-level or feature-level resource breakdowns
+          - Platform or system-level attribution reports
+          - Cost or sustainability allocation models
+        assessment_scale:
+          - Fine-grained Attribution
+          - Medium-grained Attribution
+          - Coarse Attribution
+          - Not Implemented
+        assessment_guidance:
+          Fine-grained Attribution: >
+            Resource usage is attributed to individual software components such
+            as services, features, AI models, or queries.
+          Medium-grained Attribution: >
+            Resource usage is attributed to logical systems or domains composed
+            of multiple components.
+          Coarse Attribution: >
+            Resource usage is attributed at application or infrastructure level.
+          Not Implemented: >
+            No attribution capability exists.
+        scoring:
+          Fine-grained Attribution: 1
+          Medium-grained Attribution: 0.5
+          Coarse Attribution: 0.25
+          Not Implemented: 0
+        priority: Supporting
+        weight: 4
+
+      - id: GSP-L2-MEA-05
+        title: Lifecycle Resource Profiling
+        requirement: >
+          The organisation shall conduct performance and resource profiling at
+          defined stages of the software development lifecycle.
+        rationale: >
+          Lifecycle profiling ensures sustainability considerations are integrated
+          into development and operational processes.
+        evidence_examples:
+          - Profiling reports from CI/CD pipelines
+          - Performance testing documentation
+          - Production monitoring integration
+          - Benchmarking reports
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+  - category: Software & Architecture Practices
+    requirements:
+      - id: GSP-L2-ARC-01
+        title: Resource Efficiency in Architecture and Design
+        requirement: >
+          The organisation shall explicitly consider resource efficiency during
+          software and AI architecture and design decisions.
+        rationale: >
+          Early design decisions significantly influence long-term software
+          sustainability and resource consumption.
+        evidence_examples:
+          - Architecture decision records referencing efficiency
+          - Design review checklists including sustainability considerations
+          - Architecture guidelines or design principles
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+      - id: GSP-L2-ARC-02
+        title: Efficiency Trade-off Evaluation
+        requirement: >
+          The organisation shall evaluate trade-offs between resource efficiency
+          and other software quality attributes such as correctness, accuracy,
+          user experience, or maintainability.
+        rationale: >
+          Sustainable software engineering requires balancing environmental
+          impact with functional and non-functional requirements.
+        evidence_examples:
+          - Trade-off analysis documentation
+          - Architecture decision records
+          - Performance versus quality evaluation reports
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+      - id: GSP-L2-ARC-03
+        title: Optimisation of Data Pipelines and AI/ML Models
+        requirement: >
+          The organisation shall apply optimisation techniques to data pipelines
+          and AI/ML models to improve resource efficiency where applicable.
+        rationale: >
+          Data processing and AI models often represent significant sources of
+          computational and energy consumption.
+        evidence_examples:
+          - Model optimisation reports (e.g., pruning, quantisation)
+          - Data pipeline optimisation documentation
+          - Performance benchmarking results
+          - Efficiency improvement tickets or change logs
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Supporting
+        weight: 3
+
+      - id: GSP-L2-ARC-04
+        title: Reduction of Unnecessary Computation and Data Movement
+        requirement: >
+          The organisation shall identify and reduce unnecessary computation,
+          data transfer, and data storage in software and AI systems.
+        rationale: >
+          Eliminating unnecessary processing and data movement directly reduces
+          resource consumption and environmental impact.
+        evidence_examples:
+          - Refactoring initiatives
+          - Caching or batching optimisation implementations
+          - Data lifecycle management policies
+          - Architecture improvement proposals
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+      - id: GSP-L2-ARC-05
+        title: Efficiency Review of Dependencies and Third-Party Components
+        requirement: >
+          The organisation shall periodically review software dependencies and
+          third-party components to identify opportunities for improving resource efficiency.
+        rationale: >
+          External dependencies can introduce hidden sustainability impacts and
+          optimisation opportunities.
+        evidence_examples:
+          - Dependency review reports
+          - Component evaluation documentation
+          - Software bill of materials (SBOM) analysis
+          - Upgrade or replacement decisions linked to efficiency
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Supporting
+        weight: 2
+
+  - category: Improvement & Learning
+    requirements:
+      - id: GSP-L2-IMP-01
+        title: Periodic Review of Efficiency-Related Design Decisions
+        requirement: >
+          The organisation shall periodically revisit software and AI design or
+          architectural decisions that affect resource efficiency.
+        rationale: >
+          Efficiency assumptions and technological contexts evolve over time.
+          Revisiting past design decisions helps organisations identify new
+          optimisation opportunities and prevent efficiency regressions.
+        evidence_examples:
+          - Architecture or design review records
+          - Retrospective documentation addressing efficiency trade-offs
+          - Roadmaps including optimisation initiatives
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+      - id: GSP-L2-IMP-02
+        title: Internal Sharing of Efficiency Improvement Lessons
+        requirement: >
+          The organisation shall share lessons learned internally from initiatives
+          aimed at improving resource efficiency in software and AI systems.
+        rationale: >
+          Sharing knowledge across teams promotes continuous improvement and
+          accelerates adoption of efficiency practices across the organisation.
+        evidence_examples:
+          - Internal presentations or brown bag sessions
+          - Knowledge base articles or internal documentation
+          - Retrospective reports distributed across teams
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 2
+
+      - id: GSP-L2-IMP-03
+        title: Documented Evidence of Efficiency Improvements
+        requirement: >
+          The organisation shall maintain documented examples demonstrating reduced
+          resource usage or energy consumption resulting from software or AI
+          optimisation initiatives.
+        rationale: >
+          Documenting measurable improvements enables accountability, supports
+          verification processes, and provides reusable optimisation knowledge.
+        evidence_examples:
+          - Performance or energy benchmark reports
+          - Before-and-after efficiency measurements
+          - Case studies of optimisation initiatives
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+
+      - id: GSP-L2-IMP-04
+        title: External Knowledge Sharing on Software Sustainability
+        requirement: >
+          The organisation should share lessons learned or best practices related to
+          software and AI resource efficiency with the external community.
+        rationale: >
+          External knowledge sharing contributes to ecosystem-wide sustainability
+          improvements and demonstrates organisational commitment to responsible
+          software engineering.
+        evidence_examples:
+          - Blog posts or technical articles
+          - Conference presentations or workshops
+          - Open-source contributions related to efficiency
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Supporting
+        weight: 2
+
