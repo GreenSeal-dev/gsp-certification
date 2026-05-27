@@ -9,7 +9,7 @@ def calculate_linear_scores(scale_list):
     if n <= 1: return {scale_list[0]: 1.0} if n == 1 else {}
     return {item: round(1.0 - (i / (n - 1)), 2) for i, item in enumerate(scale_list)}
 
-def convert_yaml_to_protected_excel(yaml_file, output_file):
+def convert_yaml_to_protected_excel(yaml_file, output_file, level):
     with open(yaml_file, 'r', encoding='utf-8') as f:
         data = yaml.safe_load(f)
 
@@ -24,6 +24,17 @@ def convert_yaml_to_protected_excel(yaml_file, output_file):
         cat_name = category.get('category')
         for req in category.get('requirements', []):
             req_id = req.get('id')
+
+            # 'levels' is mandatory — fail fast with a clear message
+            if 'levels' not in req:
+                raise ValueError(
+                    f"Requirement '{req_id}' is missing the required 'levels' field. "
+                    f"Add 'levels: [1]', 'levels: [2]', or 'levels: [1, 2]'."
+                )
+
+            if level not in req['levels']:
+                continue
+
             evidence = req.get('evidence_examples', [])
             evidence_str = "\n".join([f"• {item}" for item in evidence]) if isinstance(evidence, list) else evidence
 
@@ -44,6 +55,9 @@ def convert_yaml_to_protected_excel(yaml_file, output_file):
             dropdown_map[current_row_index] = scale
             guidance_map[current_row_index] = req.get('assessment_guidance')
             current_row_index += 1
+
+    if not main_rows:
+        raise ValueError(f"No requirements found for level {level}. Check the 'levels' fields in your YAML.")
 
     # 2. Setup Excel Writer
     writer = pd.ExcelWriter(output_file, engine='xlsxwriter')
@@ -83,7 +97,7 @@ def convert_yaml_to_protected_excel(yaml_file, output_file):
     # 7. Formulas and Dropdowns
     for i in range(len(df_main)):
         excel_row = i + 1
-        
+
         # Dropdown
         valid_options = dropdown_map.get(i, [])
         if valid_options:
@@ -99,14 +113,13 @@ def convert_yaml_to_protected_excel(yaml_file, output_file):
         cell_id = f"B{excel_row + 1}"
         cell_assess = f"I{excel_row + 1}"
         cell_weight = f"G{excel_row + 1}"
-        
+
         # VLOOKUP for score
         worksheet.write_formula(excel_row, 9, f'=IFERROR(VLOOKUP({cell_id}&"_"&{cell_assess}, Score_Ref!A:B, 2, FALSE), 0)', locked_calc)
         # Weighted calculation
         worksheet.write_formula(excel_row, 10, f'=J{excel_row + 1}*{cell_weight}', locked_calc)
 
     # 8. Protection - Finally, enable it!
-    # No password used here, but you can add one: worksheet.protect('password')
     worksheet.protect()
 
     # Total Score at bottom
@@ -115,16 +128,18 @@ def convert_yaml_to_protected_excel(yaml_file, output_file):
     worksheet.write_formula(last_row, 10, f"=SUM(K2:K{last_row})", header_fmt)
 
     writer.close()
-    print(f"Secured Audit file created: {output_file}")
+    print(f"✓ GSP Level {level} audit file created: {output_file}")
 
 @click.command()
 @click.argument("input", default=None, required=False, type=click.Path(exists=True))
 @click.argument("output", default=None, required=False, type=click.Path())
-def main(input, output):
+@click.option("--level", default=2, type=click.IntRange(1, 2),
+              help="Certification level to generate (1 or 2). Defaults to 2.")
+def main(input, output, level):
     root = Path(__file__).parent.parent
-    input = input or str(root / "gsp_level2.yml")
-    output = output or str(root / "Green_Software_Audit_Secure.xlsx")
-    convert_yaml_to_protected_excel(input, output)
+    input = input or str(root / "gsp_requirements.yml")
+    output = output or str(root / f"GSP_L{level}_Audit.xlsx")
+    convert_yaml_to_protected_excel(input, output, level=level)
 
 if __name__ == "__main__":
     main()
