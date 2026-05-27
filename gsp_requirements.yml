@@ -1,4 +1,4 @@
-version: 0.1.0
+version: 0.1.1
 # 'levels' is REQUIRED on every requirement — the converter will error if it is missing.
 # levels: [2]      → L2 audit only  (existing requirements)
 # levels: [1, 2]   → appears in both L1 and L2 audit outputs
@@ -107,6 +107,57 @@ categories:
           - Not Implemented
         priority: Core
         weight: 3
+
+      - id: GSP-L2-GOV-06
+        levels: [2]
+        title: Sustainability Requirements at Project Inception
+        requirement: >
+          The organisation shall define sustainability requirements and/or
+          environmental KPIs for digital services at project inception, prior
+          to or during the requirements gathering phase.
+        rationale: >
+          Defining environmental targets before a service is scoped ensures
+          sustainability is treated as a first-class requirement rather than
+          a post-hoc consideration. This aligns with the requirements gathering
+          phase of ISO/IEC TS 20125-1:2026 and prevents lock-in to
+          resource-intensive design paths.
+        evidence_examples:
+          - Project briefs or charters including sustainability criteria
+          - Requirements documents with environmental acceptance criteria
+          - Environmental KPI baselines defined before build starts
+          - Sprint zero artefacts referencing sustainability targets
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 2
+        ts_alignment: "ISO/IEC TS 20125-1:2026 – Requirements gathering phase"
+
+      - id: GSP-L2-GOV-07
+        levels: [2]
+        title: Decommissioning Responsibility
+        requirement: >
+          The organisation shall assign responsibility for planning and executing
+          the responsible decommissioning of digital services, including data
+          deletion, infrastructure shutdown, and hardware disposition.
+        rationale: >
+          Unplanned decommissioning results in residual resource consumption,
+          orphaned data, and missed opportunities to reclaim infrastructure.
+          Assigned responsibility ensures that end-of-life activities are
+          planned, executed, and documented.
+        evidence_examples:
+          - Decommissioning plans or checklists
+          - Named responsible role or team for end-of-life activities
+          - End-of-life governance procedures or runbooks
+          - Service retirement policies
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 2
+        ts_alignment: "ISO/IEC TS 20125-1:2026 – End of life phase"
 
   - category: Training & Knowledge
     completion_rules:
@@ -360,6 +411,31 @@ categories:
         priority: Core
         weight: 3
 
+      - id: GSP-L2-MEA-06
+        levels: [2]
+        title: Decommissioning Resource Footprint
+        requirement: >
+          The organisation shall estimate or measure the resource footprint
+          associated with decommissioning activities, including data migration,
+          deletion processes, and infrastructure shutdown.
+        rationale: >
+          Decommissioning is itself an energy- and resource-consuming activity.
+          Measuring or estimating its footprint enables organisations to
+          minimize it, plan migrations efficiently, and account for end-of-life
+          impacts in the full lifecycle environmental record of the service.
+        evidence_examples:
+          - Decommissioning impact assessments
+          - Migration or data deletion energy estimates
+          - Infrastructure shutdown records including resource consumption data
+          - Storage reclamation reports
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Supporting
+        weight: 1
+        ts_alignment: "ISO/IEC TS 20125-1:2026 – End of life phase"
+
   - category: Software & Architecture Practices
     requirements:
       - id: GSP-L2-ARC-01
@@ -466,6 +542,84 @@ categories:
         priority: Supporting
         weight: 2
 
+      - id: GSP-L2-ARC-06
+        levels: [2]
+        title: Feature Necessity and Scope Assessment
+        requirement: >
+          The organisation shall assess the environmental justification of
+          proposed features or functionality during requirements gathering,
+          including consideration of whether features are necessary to deliver
+          the intended user value relative to their resource cost.
+        rationale: >
+          Features that are not needed generate unnecessary computation, data
+          transfer, and maintenance burden throughout a service's life. Upstream
+          scope discipline is one of the highest-leverage sustainability
+          interventions available to a development team.
+        evidence_examples:
+          - Feature prioritization records referencing environmental cost
+          - Scope review documentation with necessity assessment
+          - Value-versus-environmental-impact analysis artefacts
+          - Backlog refinement notes referencing sustainability criteria
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Supporting
+        weight: 2
+        ts_alignment: "ISO/IEC TS 20125-1:2026 – Requirements gathering phase"
+
+      - id: GSP-L2-ARC-07
+        levels: [2]
+        title: Infrastructure and Hosting Sustainability
+        requirement: >
+          The organisation shall consider the environmental performance of
+          hosting providers and infrastructure choices during design, including
+          energy source, data centre efficiency indicators (e.g., PUE, WUE),
+          and geographic carbon intensity of the electricity grid.
+        rationale: >
+          Infrastructure and hosting choices are among the largest determinants
+          of a digital service's operational carbon footprint. Evaluating these
+          factors at design time prevents lock-in to high-emission infrastructure.
+        evidence_examples:
+          - Hosting or cloud provider selection documentation referencing
+            sustainability criteria
+          - Procurement evaluation criteria including environmental performance
+          - Green hosting or low-carbon region selection records
+          - Architecture decision records (ADRs) referencing carbon intensity
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Core
+        weight: 3
+        ts_alignment: "ISO/IEC TS 20125-1:2026 – Design phase"
+
+      - id: GSP-L2-ARC-08
+        levels: [2]
+        title: Carbon-Aware Workload Management
+        requirement: >
+          The organisation should consider the carbon intensity of the
+          electricity grid when scheduling or deploying workloads, shifting
+          non-urgent computation to lower-carbon windows where technically
+          feasible.
+        rationale: >
+          Temporal flexibility in workload execution offers a high-impact,
+          low-cost mechanism for reducing operational carbon emissions without
+          architectural changes. This is particularly relevant for batch
+          processing, model training, and data pipeline jobs.
+        evidence_examples:
+          - Scheduling policies referencing grid carbon intensity
+          - Demand-shifting or carbon-aware deployment configurations
+          - Carbon-aware tooling integration records (e.g., Carbon Aware SDK)
+          - Documentation of workloads identified as shiftable
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Supporting
+        weight: 2
+        ts_alignment: "ISO/IEC TS 20125-1:2026 – Operations phase"
+
   - category: Improvement & Learning
     requirements:
       - id: GSP-L2-IMP-01
@@ -551,3 +705,30 @@ categories:
         priority: Supporting
         weight: 2
 
+      - id: GSP-L2-IMP-05
+        levels: [2]
+        title: Post-Service Sustainability Retrospective
+        requirement: >
+          The organisation shall conduct a sustainability retrospective at the
+          end of a digital service's operational life, documenting lessons
+          learned on resource efficiency, environmental impact, and design
+          decisions that influenced sustainability outcomes, for use in
+          future projects.
+        rationale: >
+          End-of-life retrospectives close the learning loop across the full
+          service lifecycle. Insights from decommissioned services are among
+          the most reliable inputs for improving the sustainability of future
+          services, as they reflect real operational conditions rather than
+          design-time estimates.
+        evidence_examples:
+          - Decommissioning retrospective reports
+          - Post-service sustainability closure documents
+          - Lessons-learned records referenced in subsequent project planning
+          - Archived sustainability metrics from the full service lifetime
+        assessment_scale:
+          - Implemented
+          - Partially Implemented
+          - Not Implemented
+        priority: Supporting
+        weight: 2
+        ts_alignment: "ISO/IEC TS 20125-1:2026 – End of life phase"
