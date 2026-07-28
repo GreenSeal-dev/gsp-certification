@@ -620,7 +620,7 @@ categories:
         weight: 2
         ts_alignment: "ISO/IEC TS 20125-1:2026 – Operations phase"
 
-  - category: Improvement & Learning
+  - category: Continuous Improvement
     requirements:
       - id: GSP-L2-IMP-01
         levels: [2]

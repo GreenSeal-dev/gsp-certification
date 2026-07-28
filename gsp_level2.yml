@@ -442,7 +442,7 @@ categories:
         priority: Supporting
         weight: 2
 
-  - category: Improvement & Learning
+  - category: Continuous Improvement
     requirements:
       - id: GSP-L2-IMP-01
         title: Periodic Review of Efficiency-Related Design Decisions
