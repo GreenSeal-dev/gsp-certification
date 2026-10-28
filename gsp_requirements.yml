@@ -1,4 +1,4 @@
-version: 0.1.1
+version: 1.0.0
 # 'levels' is REQUIRED on every requirement — the converter will error if it is missing.
 # levels: [2]      → L2 audit only  (existing requirements)
 # levels: [1, 2]   → appears in both L1 and L2 audit outputs
