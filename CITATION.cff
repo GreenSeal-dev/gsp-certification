@@ -7,13 +7,13 @@ abstract: >-
   software, maintained by GreenSeal.dev. GSP defines weighted, evidence-based
   requirements across Governance & Culture, Training & Knowledge, Measurement &
   Observability, Software & Architecture Practices, and Continuous
-  Improvement, aligned with the ISO/IEC TS 20125-1:2026 lifecycle phases. The
-  repository includes the requirements as structured YAML and a tool that
-  generates scored Excel audit checklists.
+  Improvement, reviewed against the six ISO/IEC TS 20125-1:2026 lifecycle
+  phases. The repository includes the requirements as structured YAML and a
+  tool that generates scored Excel audit checklists.
 authors:
   - name: "GreenSeal, Lda."
     website: "https://greenseal.dev"
-version: 1.0.0
+version: 1.0.1
 date-released: 2026-10-28
 license: CC-BY-4.0
 repository-code: "https://github.com/GreenSeal-dev/gsp-certification"

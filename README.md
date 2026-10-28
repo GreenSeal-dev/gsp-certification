@@ -2,7 +2,7 @@
 
 The GreenSeal Green Software Practices (GSP) are an open set of practices for building energy- and resource-efficient software, maintained by [GreenSeal.dev](https://greenseal.dev).
 
-GSP defines weighted, evidence-based requirements for assessing how organisations build and run sustainable software. Requirements are aligned with the lifecycle phases of [ISO/IEC TS 20125-1:2026](https://www.iso.org/standard/86105.html) and are kept in a single YAML file. A small converter turns that file into a scored, protected Excel checklist for audits.
+GSP defines weighted, evidence-based requirements for assessing how organisations build and run sustainable software. Requirements have been reviewed against the six lifecycle phases of [ISO/IEC TS 20125-1:2026](https://www.iso.org/standard/86105.html) and are kept in a single YAML file. A small converter turns that file into a scored, protected Excel checklist for audits.
 
 ## Framework
 
@@ -70,7 +70,7 @@ Citation metadata is in [`CITATION.cff`](CITATION.cff), and GitHub shows it unde
 @misc{greenseal_gsp,
   author  = {{GreenSeal, Lda.}},
   title   = {GreenSeal Green Software Practices (GSP)},
-  version = {1.0.0},
+  version = {1.0.1},
   year    = {2026},
   url     = {https://greenseal.dev}
 }
@@ -88,9 +88,9 @@ The code in this repository (`src/` and `requirements.txt`) is licensed under th
 
 ## Trademarks and certification
 
-"GreenSeal", "GreenSeal.dev" and "GSP Certified" are trademarks of GreenSeal, Lda. The licences above do not grant any rights to use these trademarks.
+"GreenSeal", "GreenSeal.dev", "GSP" and "GSP Certified" are trademarks of GreenSeal, Lda. The licences above do not grant any rights to use these trademarks.
 
-The practices are open, but only GreenSeal.dev can certify organisations or products against GSP. Derivative works must not imply certification or endorsement by GreenSeal.dev.
+The practices are open, but only GreenSeal.dev can certify organisations or teams against GSP. Derivative works must not imply certification or endorsement by GreenSeal.dev.
 
 ---
 
