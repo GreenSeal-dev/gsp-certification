@@ -1,3 +1,5 @@
+# © GreenSeal, Lda. — https://greenseal.dev
+# SPDX-License-Identifier: CC-BY-4.0
 version: 1.0.1
 # 'levels' is REQUIRED on every requirement — the converter will error if it is missing.
 # levels: [2]      → L2 audit only  (existing requirements)
