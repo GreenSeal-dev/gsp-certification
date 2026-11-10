@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use GSP, please cite it using the metadata below."
 type: software
-title: "GreenSeal Green Software Practices (GSP)"
+title: "Green Software Practices (GSP)"
 abstract: >-
   An open set of practices for building energy- and resource-efficient
   software, maintained by GreenSeal.dev. GSP defines weighted, evidence-based
@@ -11,7 +11,7 @@ abstract: >-
   phases. The repository includes the requirements as structured YAML and a
   tool that generates scored Excel audit checklists.
 authors:
-  - name: "GreenSeal, Lda."
+  - name: "GreenSeal.dev"
     website: "https://greenseal.dev"
 version: 1.0.1
 date-released: 2026-10-28
