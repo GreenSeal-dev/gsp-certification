@@ -7,10 +7,7 @@
   <meta name="description" content="{% block description %}An open set of practices for building energy- and resource-efficient software, maintained by GreenSeal.dev.{% endblock %}">
   {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
   {% if not v.released %}<meta name="robots" content="noindex">{% endif %}
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ root }}/static/brand/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ root }}/static/brand/favicon-16x16.png">
-  <link rel="icon" href="{{ root }}/static/brand/favicon.ico">
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ root }}/static/brand/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="{{ root }}/static/brand/gsp-mark.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap">
@@ -20,10 +17,9 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="header">
     <div class="container header-inner">
-      <a class="brand" href="{{ prefix }}/">
-        <img class="logo" src="{{ root }}/static/brand/logo.svg" alt="GreenSeal.dev" width="220" height="25">
-        <img class="logo-mobile" src="{{ root }}/static/brand/logo-mobile.svg" alt="GreenSeal.dev" width="32" height="32">
-        <span class="brand-name">Green Software Practices</span>
+      <a class="brand" href="{{ prefix }}/" aria-label="Green Software Practices (GSP), home">
+        <span class="gsp-mark" aria-hidden="true">GSP</span>
+        <span class="brand-text"><span class="brand-name">Green Software Practices</span><span class="brand-by">An open standard by GreenSeal.dev</span></span>
       </a>
       <nav class="main-menu" aria-label="Main">
         <a href="{{ prefix }}/practices/"{% if nav == 'practices' %} aria-current="page"{% endif %}>Practices</a>
@@ -46,7 +42,7 @@
 
   <footer class="footer">
     <div class="container footer-inner">
-      <p class="footer-title">Green Software Practices</p>
+      <p class="footer-title"><span class="gsp-mark gsp-mark-small" aria-hidden="true">GSP</span> Green Software Practices</p>
       <ul>
         <li><a href="{{ prefix }}/practices/">Practices</a></li>
         <li><a href="{{ root }}/versions/">Versions</a></li>
@@ -58,7 +54,8 @@
   </footer>
   <div class="sub-footer">
     <div class="container">
-      <p>GSP v{{ v.version }}{% if v.released %}, released {{ v.date }}{% endif %}. Maintained by <a href="https://www.greenseal.dev/">GreenSeal.dev</a> and licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
+      <p class="endorse"><a href="https://www.greenseal.dev/"><img src="{{ root }}/static/brand/logo-mobile.svg" alt="" width="28" height="28"> Maintained by GreenSeal.dev</a></p>
+      <p>GSP v{{ v.version }}{% if v.released %}, released {{ v.date }}{% endif %}. Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
       <p>"GreenSeal", "GreenSeal.dev", "GSP" and "GSP Certified" are trademarks of GreenSeal, Lda. Only GreenSeal.dev can certify organisations or teams against GSP.</p>
     </div>
   </div>

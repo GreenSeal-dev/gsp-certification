@@ -1,26 +1,34 @@
 {% extends "base.html" %}
 {% from "macros.html" import level_badges %}
 {% block content %}
-<section class="intro">
-  <div class="container intro-grid">
-    <div class="intro-text">
-      <p class="kicker"><span>Green</span>Seal.dev open standard</p>
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-text">
       <h1>Green Software Practices</h1>
-      <p>Practices for building energy- and resource-efficient software. GSP sets out what organisations should do to build and run sustainable software and AI systems, and what evidence shows it is in place.</p>
-      <p class="intro-facts">{{ v.requirements|length }} practices in {{ v.categories|length }} categories. Version {{ v.version }}{% if v.released %}, released {{ v.date }}{% endif %}.</p>
+      <p>An open standard for building energy- and resource-efficient software. GSP sets out what organisations should do to build and run sustainable software and AI systems, and what evidence shows it is in place.</p>
       <p class="actions">
-        <a class="button" href="{{ prefix }}/practices/">Browse the practices</a>
-        <a class="button button-outline" href="{{ cert_url }}">Get certified</a>
+        <a class="button button-light" href="{{ prefix }}/practices/">Browse the {{ v.requirements|length }} practices</a>
+        <a class="button button-ghost" href="#use">Use and cite</a>
       </p>
+      <p class="hero-version">Version {{ v.version }}{% if v.released %}, released {{ v.date }}{% endif %}</p>
     </div>
-    <div class="intro-art">
-      <img src="{{ root }}/static/brand/illustration.jpg" alt="" width="720" height="600">
-    </div>
+    <ul class="hero-levels">
+      {% for lv in v.levels %}
+      <li>
+        <a href="{{ prefix }}/practices/?level={{ lv.n }}">
+          {% if lv.n in (1, 2) %}<img src="{{ root }}/static/brand/gsp-level-{{ lv.n }}.svg" alt="GSP {{ lv.label|lower }}, level {{ lv.n }}" width="240" height="64">{% else %}<strong>{{ lv.name }}</strong>{% endif %}
+          <span>{{ lv.summary }} <strong>{{ lv.count }} practices.</strong></span>
+        </a>
+      </li>
+      {% endfor %}
+      {% if v.levels|length > 1 %}<li class="hero-note">Every Level 1 practice also applies at Level 2.</li>{% endif %}
+    </ul>
   </div>
 </section>
 
-<section class="strip strip-grey">
+<section class="strip">
   <div class="container">
+    <h2 class="section-title">Categories</h2>
     <div class="box-grid">
       {% for c in v.categories %}
       <a class="box" href="{{ prefix }}/practices/#{{ c.slug }}">
@@ -35,25 +43,6 @@
         <p class="box-foot"><a class="button" href="{{ prefix }}/practices/">View all practices</a></p>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="strip">
-  <div class="container">
-    <h2 class="section-title">Levels</h2>
-    <div class="level-grid">
-      {% for lv in v.levels %}
-      <div class="level-block">
-        {% if lv.n in (1, 2) %}<img src="{{ root }}/static/brand/gsp-level-{{ lv.n }}.svg" alt="GSP {{ lv.label|lower }}, level {{ lv.n }}" width="220" height="58">{% endif %}
-        <div>
-          <h3>{{ lv.name }}: {{ lv.label }}</h3>
-          <p>{{ lv.summary }} {{ lv.count }} practices apply.</p>
-          <p><a href="{{ prefix }}/practices/?level={{ lv.n }}">See the {{ lv.name }} practices</a></p>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
-    {% if v.levels|length > 1 %}<p class="note centered">Every Level 1 practice also applies at Level 2. Level 2 adds the practices reviewed against the lifecycle phases of <a href="https://www.iso.org/standard/86105.html">ISO/IEC TS 20125-1:2026</a>.</p>{% endif %}
   </div>
 </section>
 
