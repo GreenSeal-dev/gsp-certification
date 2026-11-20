@@ -1,7 +1,7 @@
 """Build the public GSP website from the tagged versions of gsp_requirements.yml.
 
-Scoring (weights, scores, completion rules) is still in beta and is deliberately
-left out of the site: pages, practices.json and downloads carry no scoring data.
+Scoring (weights, scores, completion rules) is still in beta, so the pages don't
+display it. The download is the repository's gsp_requirements.yml, unchanged.
 
 Every release tag (vX.Y.Z) is rendered as a frozen copy under /vX.Y.Z/, and the
 latest release is rendered again at the site root. Run from the repository root:
@@ -10,7 +10,6 @@ latest release is rendered again at the site root. Run from the repository root:
     python src/build_site.py --base-url http://localhost:8000 --include-working-tree
     python -m http.server -d _site 8000
 """
-import json
 import re
 import shutil
 import subprocess
@@ -131,29 +130,6 @@ def build_model(src, root):
     }
 
 
-def practice_json(v, base_url):
-    return {
-        "name": "Green Software Practices (GSP)", "version": v["version"],
-        "released": v["date"] if v["released"] else None,
-        "url": f"{base_url}/v{v['version']}/", "license": "CC-BY-4.0",
-        "attribution": "GreenSeal.dev (https://greenseal.dev)",
-        "categories": [{
-            "name": c["name"], "code": c["code"],
-            "requirements": [{
-                "id": r["id"], "title": r["title"], "levels": r["levels"],
-                "requirement": r["requirement"], "rationale": r["rationale"],
-                "evidence_examples": r["evidence"],
-                "assessment_scale": [{"option": s["option"],
-                                      **({"guidance": s["guidance"]} if s["guidance"] else {})}
-                                     for s in r["scale"]],
-                "priority": r["priority"],
-                **({"iso_ts_20125_1_phase": r["iso_phase"]} if r["iso_phase"] else {}),
-                "url": f"{base_url}/v{v['version']}/practices/{r['id']}/",
-            } for r in c["requirements"]],
-        } for c in v["categories"]],
-    }
-
-
 def check_links(out, root):
     """Fail if any internal link points to a file that was not generated."""
     missing = set()
@@ -220,10 +196,9 @@ def main(out, base_url, include_working_tree):
             targets.append(("", root))
         dl_dir = out / f"v{v['version']}" / "downloads"
         dl_dir.mkdir(parents=True)
-        (dl_dir / "practices.json").write_text(
-            json.dumps(practice_json(v, base_url), indent=2, ensure_ascii=False) + "\n",
-            encoding="utf-8")
-        v["downloads"] = [{"name": "practices.json", "label": "All practices as JSON", "kind": "JSON"}]
+        # The download is the repository's YAML for this version, byte for byte.
+        (dl_dir / "gsp_requirements.yml").write_text(v["yaml"], encoding="utf-8")
+        v["downloads"] = [{"name": "gsp_requirements.yml", "label": "Requirements", "kind": "YAML"}]
         for path_prefix, prefix in targets:
             ctx = {"v": v, "prefix": prefix, "at_root": path_prefix == ""}
             canonical = lambda p: f"{base_url}{p}"  # noqa: E731
