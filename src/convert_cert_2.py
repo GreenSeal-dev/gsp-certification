@@ -1,17 +1,11 @@
-import yaml
 import pandas as pd
-import xlsxwriter
 import click
 from pathlib import Path
 
-def calculate_linear_scores(scale_list):
-    n = len(scale_list)
-    if n <= 1: return {scale_list[0]: 1.0} if n == 1 else {}
-    return {item: round(1.0 - (i / (n - 1)), 2) for i, item in enumerate(scale_list)}
+from gsp_data import load_requirements, iter_requirements, scores_for
 
 def convert_yaml_to_protected_excel(yaml_file, output_file, level):
-    with open(yaml_file, 'r', encoding='utf-8') as f:
-        data = yaml.safe_load(f)
+    data = load_requirements(yaml_file)
 
     main_rows = []
     lookup_rows = []
@@ -20,27 +14,16 @@ def convert_yaml_to_protected_excel(yaml_file, output_file, level):
     current_row_index = 0
 
     # 1. Process Data
-    for category in data.get('categories', []):
-        cat_name = category.get('category')
-        for req in category.get('requirements', []):
+    for category, req in iter_requirements(data, level):
+            cat_name = category.get('category')
             req_id = req.get('id')
-
-            # 'levels' is mandatory — fail fast with a clear message
-            if 'levels' not in req:
-                raise ValueError(
-                    f"Requirement '{req_id}' is missing the required 'levels' field. "
-                    f"Add 'levels: [1]', 'levels: [2]', or 'levels: [1, 2]'."
-                )
-
-            if level not in req['levels']:
-                continue
 
             evidence = req.get('evidence_examples', [])
             evidence_str = "\n".join([f"• {item}" for item in evidence]) if isinstance(evidence, list) else evidence
 
             # Scoring Logic
             scale = req.get('assessment_scale', [])
-            score_map = req.get('scoring') if req.get('scoring') else calculate_linear_scores(scale)
+            score_map = scores_for(req)
 
             for option, score_val in score_map.items():
                 lookup_rows.append({'Key': f"{req_id}_{option}", 'Score': score_val})

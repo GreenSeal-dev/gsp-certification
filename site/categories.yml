@@ -1,0 +1,7 @@
+# Short descriptions of each category, shown on the home and practices pages.
+# Keyed by the category code used in requirement IDs (GSP-<CODE>-<nn>).
+GOV: Ownership of sustainability topics, and how they shape goals, policies and technical decisions.
+TRN: Training for engineers and the spread of sustainable software knowledge across the organisation.
+MEA: Measuring, attributing and monitoring the resources and energy software uses.
+ARC: Design and engineering choices that use compute, memory, storage and AI models efficiently.
+IMP: Reviewing, documenting and sharing efficiency improvements over time.

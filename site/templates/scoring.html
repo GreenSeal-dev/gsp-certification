@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block description %}How GSP practices are assessed and scored: assessment scales, weights, priorities and completion rules.{% endblock %}
+{% block content %}
+<article class="prose">
+  <h1>Scoring</h1>
+  <p class="lede">Each practice is assessed on its own scale. The score for the option chosen is multiplied by the practice's weight, and the weighted scores add up to a total for the level being assessed.</p>
+
+  <h2>Assessment scale</h2>
+  <p>Every practice lists the options an assessor can choose, from best to worst. Most practices use <em>Implemented</em>, <em>Partially Implemented</em> and <em>Not Implemented</em>.</p>
+  <p>By default, scores are spread evenly from 1 for the first option to 0 for the last. With three options that gives 1, 0.5 and 0. A practice can set its own scores instead.{% set custom = v.requirements|selectattr('custom_scoring')|first %}{% if custom %} For example, <a href="{{ prefix }}/practices/{{ custom.id }}/">{{ custom.id }}</a> scores {% for s in custom.scale %}{{ s.score|score }}{{ ", " if not loop.last and loop.revindex > 2 else (" and " if not loop.last else "") }}{% endfor %}.{% endif %} Each practice page lists the score for every option.</p>
+
+  <h2>Weight</h2>
+  <p>Each practice has a whole-number weight that reflects how much it contributes. The weighted score is the score multiplied by the weight. A practice with weight 3 that is partially implemented (score 0.5) contributes 1.5.</p>
+
+  <h2>Totals per level</h2>
+  <p>The total is the sum of the weighted scores of the practices that apply at the level being assessed. In v{{ v.version }}:</p>
+  <table class="scale narrow">
+    <thead><tr><th scope="col">Level</th><th scope="col" class="num">Practices</th><th scope="col" class="num">Maximum total</th></tr></thead>
+    <tbody>{% for lv in v.levels %}<tr><th scope="row">{{ lv.name }}{% if lv.label %}: {{ lv.label }}{% endif %}</th><td class="num">{{ lv.count }}</td><td class="num">{{ lv.max_score }}</td></tr>{% endfor %}</tbody>
+  </table>
+
+  <h2>Priority</h2>
+  <p>Practices are marked <strong>Core</strong> or <strong>Supporting</strong>. Completion rules can require a minimum number of Core practices in a category.</p>
+
+  <h2>Completion rules</h2>
+  {% set ruled = v.categories|selectattr('completion_rules')|list %}
+  {% if ruled %}
+  <p>A category can set its own completion rules. In v{{ v.version }}:</p>
+  <ul>
+    {% for c in ruled %}
+    <li><a href="{{ prefix }}/practices/#{{ c.slug }}">{{ c.name }}</a>:
+      {% if c.completion_rules.minimum_total_score is defined %}minimum total score {{ c.completion_rules.minimum_total_score }}{% endif %}{% if c.completion_rules.minimum_core_requirements is defined %}, at least {{ c.completion_rules.minimum_core_requirements }} Core practices met{% endif %}{% if c.completion_rules.allow_partial_credit is defined %}, partial credit {{ "allowed" if c.completion_rules.allow_partial_credit else "not allowed" }}{% endif %}.</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No category sets completion rules in v{{ v.version }}.</p>
+  {% endif %}
+
+  <h2>Audit checklist</h2>
+  <p>Each level has an Excel checklist with one row per practice and a dropdown for the assessment. It calculates the score, the weighted score and the total as described above. It does not check completion rules. Only the assessment and notes columns can be edited.</p>
+  <ul class="downloads">
+    {% for d in v.downloads if d.kind == 'Excel' %}<li><a href="{{ v.frozen_prefix }}/downloads/{{ d.name }}" download><span class="dl-kind">{{ d.kind }}</span> {{ d.label }}, v{{ v.version }}</a></li>{% endfor %}
+  </ul>
+</article>
+{% endblock %}

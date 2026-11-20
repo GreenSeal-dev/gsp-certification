@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page_title %}{{ page_title }} · {% endif %}Green Software Practices (GSP){% if not at_root %} v{{ v.version }}{% endif %}</title>
+  <meta name="description" content="{% block description %}An open set of practices for building energy- and resource-efficient software, maintained by GreenSeal.dev.{% endblock %}">
+  {% if canonical %}<link rel="canonical" href="{{ canonical }}">{% endif %}
+  {% if not v.released %}<meta name="robots" content="noindex">{% endif %}
+  <link rel="icon" href="{{ root }}/static/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&display=swap">
+  <link rel="stylesheet" href="{{ root }}/static/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="{{ prefix }}/">
+        <img src="{{ root }}/static/favicon.svg" alt="" width="28" height="28">
+        <span><strong>GSP</strong><span class="brand-long"> Green Software Practices</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="{{ prefix }}/practices/"{% if nav == 'practices' %} aria-current="page"{% endif %}>Practices</a>
+        <a href="{{ root }}/scoring/"{% if nav == 'scoring' %} aria-current="page"{% endif %}>Scoring</a>
+        <a href="{{ root }}/versions/"{% if nav == 'versions' %} aria-current="page"{% endif %}>Versions</a>
+        <a href="{{ root }}/about/"{% if nav == 'about' %} aria-current="page"{% endif %}>Licence</a>
+        <a class="version-pill" href="{{ root }}/versions/" title="Version shown on this page">v{{ v.version }}</a>
+      </nav>
+    </div>
+  </header>
+
+  {% if not v.released %}
+  <div class="banner banner-draft" role="note"><div class="wrap">Preview of unreleased version {{ v.version }}. This text is not final and must not be cited.</div></div>
+  {% elif not at_root and not v.is_latest %}
+  <div class="banner" role="note"><div class="wrap">You are viewing GSP v{{ v.version }}, released {{ v.date }}. <a href="{{ root }}/">The latest version is v{{ latest.version }}</a>.</div></div>
+  {% endif %}
+
+  <main id="main" class="wrap">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p><strong>Green Software Practices (GSP) v{{ v.version }}</strong>{% if v.released %}, released {{ v.date }}{% endif %}. Maintained by <a href="https://greenseal.dev">GreenSeal.dev</a>.</p>
+      <p>The practices are licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. "GreenSeal", "GreenSeal.dev", "GSP" and "GSP Certified" are trademarks of GreenSeal, Lda. Only GreenSeal.dev can certify organisations or teams against GSP.</p>
+      <p class="footer-links"><a href="{{ repo_url }}">Source on GitHub</a> <a href="{{ root }}/about/">Licence and certification</a> <a href="{{ cert_url }}">Get certified</a></p>
+    </div>
+  </footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

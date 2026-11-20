@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block description %}Licence, attribution, trademarks and certification for Green Software Practices (GSP).{% endblock %}
+{% block content %}
+<article class="prose">
+  <h1>Licence and certification</h1>
+
+  <h2>Licence</h2>
+  <p>The practices and their documentation, including <code>gsp_requirements.yml</code> and the audit checklists generated from it, are licensed under the <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International licence (CC BY 4.0)</a>. You are free to use, share and adapt them, including commercially, provided you give attribution to "GreenSeal.dev (https://greenseal.dev)" and indicate if you made changes.</p>
+  <p>The code that generates the checklists and this website is licensed under the <a href="{{ repo_url }}/blob/main/LICENSE-CODE">MIT licence</a>.</p>
+
+  <h2>How to cite</h2>
+  <p>Cite the version you used, and link to its frozen address, for example <code>{{ base_url }}/v{{ v.version }}/</code>. Each practice page has a ready-made citation, and the repository's <a href="{{ repo_url }}/blob/main/CITATION.cff"><code>CITATION.cff</code></a> describes the whole set.</p>
+
+  <h2>Trademarks and certification</h2>
+  <p>"GreenSeal", "GreenSeal.dev", "GSP" and "GSP Certified" are trademarks of GreenSeal, Lda. The licences above do not grant any rights to use these trademarks.</p>
+  <p>The practices are open, but only GreenSeal.dev can certify organisations or teams against GSP. Using or adapting the practices does not make an organisation GSP certified, and derivative works must not imply certification or endorsement by GreenSeal.dev.</p>
+  <p><a href="{{ cert_url }}">About GSP certification at GreenSeal.dev</a></p>
+
+  <h2>Contributing</h2>
+  <p>Corrections and proposals are welcome as <a href="{{ repo_url }}/issues">issues</a> or pull requests on GitHub. Every practice page has a "Suggest a change" link. GreenSeal.dev decides which changes are accepted and in which release they appear. See <a href="{{ repo_url }}/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+</article>
+{% endblock %}
