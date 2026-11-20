@@ -158,6 +158,20 @@ def load_certified(today):
     return sorted(orgs, key=lambda o: o["certified_on"], reverse=True)
 
 
+EXTERNAL_LINK = re.compile(r'(<a\s[^>]*?href="(https?://[^"/]+)[^"]*"[^>]*>)(.*?)(</a>)', re.S)
+EXTERNAL_MARK = ('<span class="ext" aria-hidden="true">\u2197</span>'
+                 '<span class="visually-hidden"> (external site)</span>')
+
+
+def mark_external_links(html, site_origin):
+    """Add a visible arrow and a screen-reader label to links that leave the site."""
+    def mark(m):
+        if m.group(2) == site_origin or EXTERNAL_MARK in m.group(3):
+            return m.group(0)
+        return m.group(1) + m.group(3) + EXTERNAL_MARK + m.group(4)
+    return EXTERNAL_LINK.sub(mark, html)
+
+
 def check_links(out, root):
     """Fail if any internal link points to a file that was not generated."""
     missing = set()
@@ -184,6 +198,7 @@ def check_links(out, root):
 def main(out, base_url, include_working_tree):
     base_url = base_url.rstrip("/")
     root = urlparse(base_url).path.rstrip("/")
+    site_origin = f"{urlparse(base_url).scheme}://{urlparse(base_url).netloc}"
     out = Path(out)
     if not out.is_absolute():
         out = ROOT / out
@@ -219,7 +234,8 @@ def main(out, base_url, include_working_tree):
         if not path.endswith(".html"):
             target = target / "index.html"
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(env.get_template(template).render(**ctx), encoding="utf-8")
+        html = env.get_template(template).render(**ctx)
+        target.write_text(mark_external_links(html, site_origin), encoding="utf-8")
 
     for v in versions:
         # Each version is frozen under /vX.Y.Z/; the latest is also served at the root.
