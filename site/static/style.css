@@ -232,7 +232,7 @@ a.box:hover h2 { text-decoration: underline; }
 .sub-footer p { color: var(--white); font-size: 14px; line-height: 1.5; margin-bottom: 10px; }
 .sub-footer a { color: var(--white); font-weight: 700; }
 .sub-footer .endorse a { display: inline-flex; align-items: center; gap: 10px; font-weight: 400; }
-.sub-footer .endorse img { background: var(--white); border-radius: 50%; padding: 2px; }
+.sub-footer .endorse img { display: block; background: var(--white); padding: 2px; }
 
 /* Print: auditors print practice pages. */
 @media print {
