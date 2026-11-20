@@ -66,7 +66,7 @@ By default, scores are spread linearly from 1.0 for the first option on the asse
 
 ## Website
 
-The public site at [gsp.greenseal.dev](https://gsp.greenseal.dev) is generated from this repository by `src/build_site.py` (Python + Jinja2, templates in `site/`). It has a page per practice, a filterable list of all practices, and downloads (YAML, JSON and Excel checklists) for every version.
+The public site at [gsp.greenseal.dev](https://gsp.greenseal.dev) is generated from this repository by `src/build_site.py` (Python + Jinja2, templates in `site/`). It has a page per practice, a filterable list of all practices, and a JSON download for every version. Scoring (weights, scores, completion rules and the Excel checklists) is still in beta and is deliberately left off the site.
 
 Every release tag is built as a frozen copy under `/vX.Y.Z/`, and the latest release is also served at the root. The GitHub Actions workflow in `.github/workflows/site.yml` deploys the site on every push to `main` and every new tag.
 
@@ -102,7 +102,7 @@ Contributions are welcome. See [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 The practices and documentation in this repository, including `gsp_requirements.yml`, the Markdown files and the audit checklists generated from them, are licensed under the [Creative Commons Attribution 4.0 International licence (CC BY 4.0)](LICENSE). You are free to use, share and adapt them, including commercially, provided you give attribution to "GreenSeal.dev (https://greenseal.dev)" and indicate if you made changes.
 
-The code in this repository (`src/`, `site/templates/`, `site/static/` and `requirements.txt`) is licensed under the [MIT licence](LICENSE-CODE).
+The code in this repository (`src/`, `site/templates/`, `site/static/` except `site/static/brand/`, and `requirements.txt`) is licensed under the [MIT licence](LICENSE-CODE). The GreenSeal.dev logo, GSP badges and favicons in `site/static/brand/` are trademarks of GreenSeal, Lda. and are not covered by either licence.
 
 ## Trademarks and certification
 

@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 {% block description %}All released versions of Green Software Practices (GSP) and the changelog.{% endblock %}
 {% block content %}
-<article class="prose">
+<div class="container page prose">
   <h1>Versions</h1>
-  <p class="lede">Audits and citations refer to a fixed version. Every version stays online at its own address, and its text never changes.</p>
-  <table class="scale versions-table">
-    <thead><tr><th scope="col">Version</th><th scope="col">Released</th><th scope="col" class="num">Practices</th><th scope="col">Downloads</th></tr></thead>
+  <p class="lede">Assessments and citations refer to a fixed version. Every version stays online at its own address, and its text never changes.</p>
+  <table class="versions-table">
+    <thead><tr><th scope="col">Version</th><th scope="col">Released</th><th scope="col">Practices</th><th scope="col">Download</th></tr></thead>
     <tbody>
     {% for ver in versions|reverse %}
       <tr>
-        <th scope="row"><a href="{{ ver.frozen_prefix }}/">v{{ ver.version }}</a>{% if ver.is_latest and ver.released %} <span class="tag">Latest</span>{% elif not ver.released %} <span class="tag tag-draft">Unreleased</span>{% endif %}</th>
-        <td>{{ ver.date if ver.released else "—" }}</td>
-        <td class="num">{% for lv in ver.levels %}{{ lv.short }} {{ lv.count }}{% if not loop.last %} · {% endif %}{% endfor %}</td>
-        <td>{% for d in ver.downloads %}<a href="{{ ver.frozen_prefix }}/downloads/{{ d.name }}" download>{{ d.kind }}{% if d.kind == 'Excel' %} {{ d.name.split('_')[1] }}{% endif %}</a>{% if not loop.last %}, {% endif %}{% endfor %}</td>
+        <th scope="row"><a href="{{ ver.frozen_prefix }}/">v{{ ver.version }}</a>{% if ver.is_latest and ver.released %} (latest){% elif not ver.released %} (unreleased){% endif %}</th>
+        <td>{{ ver.date if ver.released else "Not yet" }}</td>
+        <td>{% for lv in ver.levels %}{{ lv.name }}: {{ lv.count }}{% if not loop.last %}<br>{% endif %}{% endfor %}</td>
+        <td>{% for d in ver.downloads %}<a href="{{ ver.frozen_prefix }}/downloads/{{ d.name }}" download>{{ d.kind }}</a>{% endfor %}</td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
-  <p class="note">Up to v1.0.1, practice IDs included the level (<code>GSP-L2-GOV-01</code>). From v1.1.0 they don't (<code>GSP-GOV-01</code>), and a practice's levels are listed on its page.</p>
+  <p class="note">Up to v1.0.1, practice IDs included the level, as in GSP-L2-GOV-01. From v1.1.0 they don't (GSP-GOV-01), and each practice page lists its levels.</p>
 
   <h2>Changelog</h2>
   <div class="changelog">{{ changelog|safe }}</div>
-</article>
+</div>
 {% endblock %}

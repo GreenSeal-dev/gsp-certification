@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<article class="prose">
+<div class="container page prose">
   <h1>Page not found</h1>
-  <p class="lede">This page doesn't exist. If you followed a link to a practice with an ID like <code>GSP-L2-GOV-01</code>, it's from v1.0.1 or earlier. From v1.1.0 that practice is <code>GSP-GOV-01</code>.</p>
-  <p><a class="button" href="{{ root }}/practices/">See all practices</a> <a class="button button-quiet" href="{{ root }}/versions/">All versions</a></p>
-</article>
+  <p class="lede">This page doesn't exist. If you followed a link to a practice with an ID like GSP-L2-GOV-01, it's from v1.0.1 or earlier. From v1.1.0 that practice is GSP-GOV-01.</p>
+  <p><a class="button" href="{{ root }}/practices/">See all practices</a> <a class="button button-outline" href="{{ root }}/versions/">All versions</a></p>
+</div>
 {% endblock %}

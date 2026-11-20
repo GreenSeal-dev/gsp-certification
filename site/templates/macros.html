@@ -1,3 +1,3 @@
-{% macro level_badges(levels) %}<span class="badges">{% for lv in levels %}<span class="badge badge-l{{ lv }}" title="{{ level_info[lv].name if lv in level_info else 'Level ' ~ lv }}">L{{ lv }}</span>{% endfor %}</span>{% endmacro %}
+{% macro level_badges(levels) %}<span class="levels">{% for lv in levels %}<span class="level level-{{ lv }}">Level {{ lv }}</span>{% endfor %}</span>{% endmacro %}
 
-{% macro priority_tag(priority) %}<span class="tag tag-{{ priority|lower }}">{{ priority }}</span>{% endmacro %}
+{% macro priority_tag(priority) %}<span class="priority priority-{{ priority|lower }}">{{ priority }}</span>{% endmacro %}

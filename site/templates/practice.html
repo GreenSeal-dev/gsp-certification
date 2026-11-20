@@ -3,94 +3,87 @@
 {% block description %}{{ r.id }}: {{ r.requirement }}{% endblock %}
 {% block content %}
 {% set frozen_url = base_url ~ "/v" ~ v.version ~ "/practices/" ~ r.id ~ "/" %}
-<nav class="crumbs" aria-label="Breadcrumb"><a href="{{ prefix }}/">GSP v{{ v.version }}</a> / <a href="{{ prefix }}/practices/">Practices</a> / <a href="{{ prefix }}/practices/#{{ r.category.slug }}">{{ r.category.name }}</a></nav>
+<div class="container page">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ prefix }}/">GSP v{{ v.version }}</a> / <a href="{{ prefix }}/practices/">Practices</a> / <a href="{{ prefix }}/practices/#{{ r.category.slug }}">{{ r.category.name }}</a></nav>
 
-<div class="practice">
-  <article class="practice-main">
-    <header class="practice-head">
-      <p class="practice-id">{{ r.id }}</p>
-      <h1>{{ r.title }}</h1>
-      <dl class="meta-strip">
-        <div><dt>Category</dt><dd>{{ r.category.name }}</dd></div>
-        <div><dt>Levels</dt><dd>{{ level_badges(r.levels) }}</dd></div>
-        <div><dt>Priority</dt><dd>{{ priority_tag(r.priority) }}</dd></div>
-        <div><dt>Weight</dt><dd>{{ r.weight }}</dd></div>
-        {% if r.iso_phase %}<div><dt>ISO/IEC TS 20125-1</dt><dd>{{ r.iso_phase }}</dd></div>{% endif %}
-      </dl>
-    </header>
+  <div class="practice">
+    <article class="practice-main">
+      <header class="practice-head">
+        <p class="practice-id">{{ r.id }}</p>
+        <h1>{{ r.title }}</h1>
+        <dl class="meta">
+          <div><dt>Category</dt><dd>{{ r.category.name }}</dd></div>
+          <div><dt>Levels</dt><dd>{{ level_badges(r.levels) }}</dd></div>
+          <div><dt>Priority</dt><dd>{{ priority_tag(r.priority) }}</dd></div>
+          {% if r.iso_phase %}<div><dt>ISO/IEC TS 20125-1</dt><dd>{{ r.iso_phase }}</dd></div>{% endif %}
+        </dl>
+      </header>
 
-    <section class="normative" aria-labelledby="req-h">
-      <h2 id="req-h">Requirement <span class="kind">Normative</span></h2>
-      <p>{{ r.requirement }}</p>
-    </section>
+      <section class="requirement" aria-labelledby="req-h">
+        <h2 id="req-h">Requirement</h2>
+        <p>{{ r.requirement }}</p>
+      </section>
 
-    {% if r.rationale %}
-    <section aria-labelledby="rat-h">
-      <h2 id="rat-h">Rationale <span class="kind">Informative</span></h2>
-      <p>{{ r.rationale }}</p>
-    </section>
-    {% endif %}
+      {% if r.rationale %}
+      <section aria-labelledby="rat-h">
+        <h2 id="rat-h">Rationale</h2>
+        <p>{{ r.rationale }}</p>
+      </section>
+      {% endif %}
 
-    {% if r.evidence %}
-    <section aria-labelledby="ev-h">
-      <h2 id="ev-h">Evidence examples <span class="kind">Informative</span></h2>
-      <p class="hint">Examples of evidence that can show the practice is in place. Other evidence may also be accepted.</p>
-      <ul class="evidence">{% for e in r.evidence %}<li>{{ e }}</li>{% endfor %}</ul>
-    </section>
-    {% endif %}
+      {% if r.evidence %}
+      <section aria-labelledby="ev-h">
+        <h2 id="ev-h">Evidence examples</h2>
+        <p>Examples of evidence that can show the practice is in place. Other evidence may also be accepted.</p>
+        <ul class="evidence">{% for e in r.evidence %}<li>{{ e }}</li>{% endfor %}</ul>
+      </section>
+      {% endif %}
 
-    <section aria-labelledby="scale-h">
-      <h2 id="scale-h">Assessment scale</h2>
-      <p class="hint">{% if r.custom_scoring %}This practice uses its own scores.{% else %}Scores are spread evenly from 1 to 0.{% endif %} The weighted score is the score × {{ r.weight }}. <a href="{{ root }}/scoring/">How scoring works</a></p>
-      <table class="scale">
-        <thead><tr><th scope="col">Option</th><th scope="col" class="num">Score</th><th scope="col" class="num">Weighted</th></tr></thead>
-        <tbody>
-        {% for s in r.scale %}
-          <tr>
-            <th scope="row">{{ s.option }}{% if s.guidance %}<span class="guidance">{{ s.guidance }}</span>{% endif %}</th>
-            <td class="num">{{ s.score|score }}</td>
-            <td class="num">{{ (s.score * r.weight)|score }}</td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    </section>
+      {% if r.scale %}
+      <section aria-labelledby="scale-h">
+        <h2 id="scale-h">Assessment scale</h2>
+        <p>An assessor chooses one of these options, from best to worst.</p>
+        <ol class="scale">
+          {% for s in r.scale %}<li><strong>{{ s.option }}</strong>{% if s.guidance %}<span>{{ s.guidance }}</span>{% endif %}</li>{% endfor %}
+        </ol>
+      </section>
+      {% endif %}
 
-    <nav class="pager" aria-label="Practices in {{ r.category.name }}">
-      {% if r.prev %}<a class="pager-prev" href="{{ prefix }}/practices/{{ r.prev.id }}/"><span>Previous</span>{{ r.prev.id }} {{ r.prev.title }}</a>{% else %}<span></span>{% endif %}
-      {% if r.next %}<a class="pager-next" href="{{ prefix }}/practices/{{ r.next.id }}/"><span>Next</span>{{ r.next.id }} {{ r.next.title }}</a>{% endif %}
-    </nav>
-  </article>
+      <nav class="pager" aria-label="Practices in {{ r.category.name }}">
+        {% if r.prev %}<a class="pager-prev" href="{{ prefix }}/practices/{{ r.prev.id }}/"><span>Previous</span>{{ r.prev.id }} {{ r.prev.title }}</a>{% else %}<span></span>{% endif %}
+        {% if r.next %}<a class="pager-next" href="{{ prefix }}/practices/{{ r.next.id }}/"><span>Next</span>{{ r.next.id }} {{ r.next.title }}</a>{% endif %}
+      </nav>
+    </article>
 
-  <aside class="practice-side">
-    <section class="side-box">
-      <h2>Cite this practice</h2>
-      <p class="cite" id="cite-text">GreenSeal.dev ({{ v.year }}). {{ r.id }}: {{ r.title }}. In <em>Green Software Practices (GSP)</em>, version {{ v.version }}. {{ frozen_url }}</p>
-      <details>
-        <summary>BibTeX</summary>
-<pre id="cite-bib">{{ bibtex }}</pre>
-      </details>
-      <p class="side-small">Permanent link to this version: <a href="{{ frozen_url }}">{{ frozen_url|replace('https://', '') }}</a></p>
-    </section>
+    <aside class="practice-side">
+      <section class="side-box">
+        <h2>Cite this practice</h2>
+        <p class="cite">GreenSeal.dev ({{ v.year }}). {{ r.id }}: {{ r.title }}. In <em>Green Software Practices (GSP)</em>, version {{ v.version }}. {{ frozen_url }}</p>
+        <details>
+          <summary>BibTeX</summary>
+          <pre>{{ bibtex }}</pre>
+        </details>
+      </section>
 
-    {% if other_versions|length > 1 %}
-    <section class="side-box">
-      <h2>Versions</h2>
-      <ul class="side-list">
-        {% for ov in other_versions|reverse %}
-        <li>{% if ov is sameas v %}<strong>v{{ ov.version }}</strong> (this page){% else %}<a href="{{ ov.frozen_prefix }}/practices/{{ r.id }}/">v{{ ov.version }}</a>{% endif %}</li>
-        {% endfor %}
-      </ul>
-    </section>
-    {% endif %}
+      {% if other_versions|length > 1 %}
+      <section class="side-box">
+        <h2>Versions</h2>
+        <ul class="side-list">
+          {% for ov in other_versions|reverse %}
+          <li>{% if ov is sameas v %}v{{ ov.version }}, this page{% else %}<a href="{{ ov.frozen_prefix }}/practices/{{ r.id }}/">v{{ ov.version }}</a>{% endif %}</li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
 
-    <section class="side-box">
-      <h2>Contribute</h2>
-      <ul class="side-list">
-        <li><a href="{{ issue_url }}">Suggest a change</a></li>
-        <li><a href="{{ repo_url }}/blob/{{ v.ref }}/gsp_requirements.yml{% if r.line %}#L{{ r.line }}{% endif %}">View in the YAML source</a></li>
-      </ul>
-    </section>
-  </aside>
+      <section class="side-box">
+        <h2>Contribute</h2>
+        <ul class="side-list">
+          <li><a href="{{ issue_url }}">Suggest a change</a></li>
+          <li><a href="{{ repo_url }}/blob/{{ v.ref }}/gsp_requirements.yml{% if r.line %}#L{{ r.line }}{% endif %}">View the source on GitHub</a></li>
+        </ul>
+      </section>
+    </aside>
+  </div>
 </div>
 {% endblock %}

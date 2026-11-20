@@ -2,44 +2,39 @@
 {% from "macros.html" import level_badges, priority_tag %}
 {% block description %}All {{ v.requirements|length }} practices of Green Software Practices (GSP) v{{ v.version }}, grouped by category.{% endblock %}
 {% block content %}
-<nav class="crumbs" aria-label="Breadcrumb"><a href="{{ prefix }}/">GSP v{{ v.version }}</a> / Practices</nav>
-<h1>Practices</h1>
-<p class="lede">GSP v{{ v.version }} has {{ v.requirements|length }} practices in {{ v.categories|length }} categories.{% for lv in v.levels %} {{ lv.count }} apply at {{ lv.name }}{{ "." if loop.last else "," }}{% endfor %}</p>
+<div class="container page">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ prefix }}/">GSP v{{ v.version }}</a> / Practices</nav>
+  <h1>Practices</h1>
+  <p class="lede">GSP v{{ v.version }} has {{ v.requirements|length }} practices in {{ v.categories|length }} categories.{% for lv in v.levels %} {{ lv.count }} apply at {{ lv.name }}{{ "." if loop.last else "," }}{% endfor %}</p>
 
-<form class="filters" id="filters" role="search" hidden>
-  <label class="filter-search"><span>Search</span><input type="search" name="q" placeholder="ID, title or text" autocomplete="off"></label>
-  {% if v.levels|length > 1 %}
-  <label><span>Level</span><select name="level"><option value="">All levels</option>{% for lv in v.levels %}<option value="{{ lv.n }}">{{ lv.name }} ({{ lv.count }})</option>{% endfor %}</select></label>
-  {% endif %}
-  <label><span>Category</span><select name="category"><option value="">All categories</option>{% for c in v.categories %}<option value="{{ c.slug }}">{{ c.name }}</option>{% endfor %}</select></label>
-  <label><span>Priority</span><select name="priority"><option value="">Core and Supporting</option><option>Core</option><option>Supporting</option></select></label>
-  <p class="filter-count" aria-live="polite"></p>
-</form>
-
-{% for c in v.categories %}
-<section class="category" id="{{ c.slug }}" data-category="{{ c.slug }}">
-  <header class="category-head">
-    <h2><span class="card-code">{{ c.code }}</span> {{ c.name }}</h2>
-    {% if blurbs[c.code] %}<p>{{ blurbs[c.code] }}</p>{% endif %}
-    {% if c.completion_rules %}
-    <p class="rules"><strong>Completion rules:</strong>
-      {% if c.completion_rules.minimum_total_score is defined %}minimum total score {{ c.completion_rules.minimum_total_score }}{% endif %}{% if c.completion_rules.minimum_core_requirements is defined %}, at least {{ c.completion_rules.minimum_core_requirements }} Core practices met{% endif %}{% if c.completion_rules.allow_partial_credit is defined %}, partial credit {{ "allowed" if c.completion_rules.allow_partial_credit else "not allowed" }}{% endif %}.
-    </p>
+  <form class="filters" id="filters" role="search" hidden>
+    <label class="filter-search">Search<input type="search" name="q" placeholder="ID, title or text" autocomplete="off"></label>
+    {% if v.levels|length > 1 %}
+    <label>Level<select name="level"><option value="">All levels</option>{% for lv in v.levels %}<option value="{{ lv.n }}">{{ lv.name }} ({{ lv.count }})</option>{% endfor %}</select></label>
     {% endif %}
-  </header>
-  <ol class="practice-list">
-    {% for r in c.requirements %}
-    <li class="practice-row" data-levels="{{ r.levels|join(' ') }}" data-priority="{{ r.priority }}" data-text="{{ (r.id ~ ' ' ~ r.title ~ ' ' ~ r.requirement)|lower }}">
-      <a href="{{ prefix }}/practices/{{ r.id }}/">
-        <span class="row-id">{{ r.id }}</span>
-        <span class="row-title">{{ r.title }}</span>
-        <span class="row-meta">{{ level_badges(r.levels) }} {{ priority_tag(r.priority) }} <span class="weight" title="Weight">×{{ r.weight }}</span></span>
-      </a>
-    </li>
-    {% endfor %}
-  </ol>
-</section>
-{% endfor %}
-<p class="empty" id="empty" hidden>No practices match these filters.</p>
+    <label>Category<select name="category"><option value="">All categories</option>{% for c in v.categories %}<option value="{{ c.slug }}">{{ c.name }}</option>{% endfor %}</select></label>
+    <label>Priority<select name="priority"><option value="">Core and Supporting</option><option>Core</option><option>Supporting</option></select></label>
+    <p class="filter-count" aria-live="polite"></p>
+  </form>
+
+  {% for c in v.categories %}
+  <section class="category" id="{{ c.slug }}" data-category="{{ c.slug }}">
+    <h2>{{ c.name }}</h2>
+    {% if blurbs[c.code] %}<p>{{ blurbs[c.code] }}</p>{% endif %}
+    <ol class="practice-list">
+      {% for r in c.requirements %}
+      <li class="practice-row" data-levels="{{ r.levels|join(' ') }}" data-priority="{{ r.priority }}" data-text="{{ (r.id ~ ' ' ~ r.title ~ ' ' ~ r.requirement)|lower }}">
+        <a href="{{ prefix }}/practices/{{ r.id }}/">
+          <span class="row-id">{{ r.id }}</span>
+          <span class="row-title">{{ r.title }}</span>
+          <span class="row-meta">{{ level_badges(r.levels) }} {{ priority_tag(r.priority) }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endfor %}
+  <p class="empty" id="empty" hidden>No practices match these filters. Clear the search or choose another level, category or priority.</p>
+</div>
 {% endblock %}
 {% block scripts %}<script src="{{ root }}/static/filter.js" defer></script>{% endblock %}

@@ -1,5 +1,8 @@
 """Build the public GSP website from the tagged versions of gsp_requirements.yml.
 
+Scoring (weights, scores, completion rules) is still in beta and is deliberately
+left out of the site: pages, practices.json and downloads carry no scoring data.
+
 Every release tag (vX.Y.Z) is rendered as a frozen copy under /vX.Y.Z/, and the
 latest release is rendered again at the site root. Run from the repository root:
 
@@ -22,8 +25,7 @@ import yaml
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 sys.path.insert(0, str(Path(__file__).parent))
-from gsp_data import parse_requirements, scores_for  # noqa: E402
-from convert_cert_2 import convert_yaml_to_protected_excel  # noqa: E402
+from gsp_data import parse_requirements  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 SITE_SRC = ROOT / "site"
@@ -96,26 +98,22 @@ def build_model(src, root):
                 raise click.ClickException(f"Unexpected requirement id {req['id']!r}")
             line = next((i + 1 for i, ln in enumerate(lines)
                          if re.match(rf"\s*- id: {re.escape(req['id'])}\s*$", ln)), None)
-            scores = scores_for(req)
             guidance = req.get("assessment_guidance") or {}
             items.append({
                 "id": req["id"], "code": m.group(1), "title": clean(req["title"]),
                 "requirement": clean(req.get("requirement")),
                 "rationale": clean(req.get("rationale")),
                 "evidence": [clean(e) for e in req.get("evidence_examples", [])],
-                "scale": [{"option": o, "score": scores.get(o, 0),
-                           "guidance": clean(guidance.get(o))}
+                "scale": [{"option": o, "guidance": clean(guidance.get(o))}
                           for o in req.get("assessment_scale", [])],
-                "custom_scoring": bool(req.get("scoring")),
-                "priority": req.get("priority", ""), "weight": req.get("weight", 1),
+                "priority": req.get("priority", ""),
                 "levels": sorted(req["levels"]),
                 "iso_phase": ISO_PREFIX.sub("", req["ts_alignment"]) if req.get("ts_alignment") else "",
                 "line": line,
             })
         code = items[0]["code"] if items else re.sub(r"\W+", "-", cat["category"]).lower()
-        rules = cat.get("completion_rules") or {}
         category = {"name": cat["category"], "code": code, "slug": code.lower(),
-                    "completion_rules": rules, "requirements": items}
+                    "requirements": items}
         for i, item in enumerate(items):
             item["category"] = category
             item["prev"] = items[i - 1] if i > 0 else None
@@ -127,8 +125,7 @@ def build_model(src, root):
         **src, "frozen_prefix": prefix, "categories": categories, "requirements": reqs,
         "levels": [{"n": lv, **LEVELS.get(lv, {"name": f"Level {lv}", "short": f"L{lv}",
                                                "label": "", "summary": ""}),
-                    "count": sum(lv in r["levels"] for r in reqs),
-                    "max_score": sum(r["weight"] for r in reqs if lv in r["levels"])}
+                    "count": sum(lv in r["levels"] for r in reqs)}
                    for lv in levels],
         "year": src["date"][:4],
     }
@@ -142,15 +139,14 @@ def practice_json(v, base_url):
         "attribution": "GreenSeal.dev (https://greenseal.dev)",
         "categories": [{
             "name": c["name"], "code": c["code"],
-            "completion_rules": c["completion_rules"] or None,
             "requirements": [{
                 "id": r["id"], "title": r["title"], "levels": r["levels"],
                 "requirement": r["requirement"], "rationale": r["rationale"],
                 "evidence_examples": r["evidence"],
-                "assessment_scale": [{"option": s["option"], "score": s["score"],
+                "assessment_scale": [{"option": s["option"],
                                       **({"guidance": s["guidance"]} if s["guidance"] else {})}
                                      for s in r["scale"]],
-                "priority": r["priority"], "weight": r["weight"],
+                "priority": r["priority"],
                 **({"iso_ts_20125_1_phase": r["iso_phase"]} if r["iso_phase"] else {}),
                 "url": f"{base_url}/v{v['version']}/practices/{r['id']}/",
             } for r in c["requirements"]],
@@ -209,7 +205,6 @@ def main(out, base_url, include_working_tree):
     env.globals.update(root=root, base_url=base_url, repo_url=REPO_URL, cert_url=CERT_URL,
                        latest=latest, versions=versions, released=released,
                        blurbs=blurbs, level_info=LEVELS)
-    env.filters["score"] = lambda x: f"{float(x):.2f}".rstrip("0").rstrip(".") if float(x) % 1 else f"{int(x)}"
 
     def write(path, template, **ctx):
         target = out / path.lstrip("/")
@@ -225,21 +220,10 @@ def main(out, base_url, include_working_tree):
             targets.append(("", root))
         dl_dir = out / f"v{v['version']}" / "downloads"
         dl_dir.mkdir(parents=True)
-        (dl_dir / "gsp_requirements.yml").write_text(v["yaml"], encoding="utf-8")
         (dl_dir / "practices.json").write_text(
             json.dumps(practice_json(v, base_url), indent=2, ensure_ascii=False) + "\n",
             encoding="utf-8")
-        v["downloads"] = []
-        for lv in v["levels"]:
-            name = f"GSP_L{lv['n']}_Audit_v{v['version']}.xlsx"
-            convert_yaml_to_protected_excel(str(dl_dir / "gsp_requirements.yml"),
-                                            str(dl_dir / name), level=lv["n"])
-            v["downloads"].append({"name": name, "label": f"{lv['name']} audit checklist",
-                                   "kind": "Excel"})
-        v["downloads"] += [
-            {"name": "gsp_requirements.yml", "label": "Requirements (source)", "kind": "YAML"},
-            {"name": "practices.json", "label": "Requirements (machine-readable)", "kind": "JSON"},
-        ]
+        v["downloads"] = [{"name": "practices.json", "label": "All practices as JSON", "kind": "JSON"}]
         for path_prefix, prefix in targets:
             ctx = {"v": v, "prefix": prefix, "at_root": path_prefix == ""}
             canonical = lambda p: f"{base_url}{p}"  # noqa: E731
@@ -267,8 +251,6 @@ def main(out, base_url, include_working_tree):
                       other_versions=by_id[r["id"]], issue_url=issue)
 
     ctx = {"v": latest, "prefix": root, "at_root": True}
-    write("/scoring/", "scoring.html", **ctx, canonical=f"{base_url}/scoring/",
-          page_title="Scoring", nav="scoring")
     write("/versions/", "versions.html", **ctx, canonical=f"{base_url}/versions/",
           page_title="Versions", nav="versions",
           changelog=markdown.markdown(latest["changelog"].split("\n", 1)[1]
@@ -277,7 +259,7 @@ def main(out, base_url, include_working_tree):
           page_title="Licence and certification", nav="about")
     write("/404.html", "404.html", **ctx, canonical=None, page_title="Page not found", nav=None)
 
-    pages = ["/", "/practices/", "/scoring/", "/versions/", "/about/"] + \
+    pages = ["/", "/practices/", "/versions/", "/about/"] + \
         [f"/practices/{r['id']}/" for r in latest["requirements"]]
     (out / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'

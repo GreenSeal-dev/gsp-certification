@@ -1,83 +1,78 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="hero">
-  <p class="eyebrow">Open standard · Version {{ v.version }}{% if v.released %} · {{ v.date }}{% endif %}</p>
-  <h1>Green Software Practices</h1>
-  <p class="lede">GSP is an open set of practices for building energy- and resource-efficient software. It defines weighted, evidence-based requirements for assessing how organisations build and run sustainable software and AI systems.</p>
-  <div class="actions">
-    <a class="button" href="{{ prefix }}/practices/">Browse the {{ v.requirements|length }} practices</a>
-    <a class="button button-quiet" href="#downloads">Download</a>
-  </div>
-  <dl class="facts">
-    <div><dt>Practices</dt><dd>{{ v.requirements|length }}</dd></div>
-    <div><dt>Categories</dt><dd>{{ v.categories|length }}</dd></div>
-    <div><dt>Levels</dt><dd>{{ v.levels|length }}</dd></div>
-    <div><dt>Licence</dt><dd>CC BY 4.0</dd></div>
-  </dl>
-</section>
-
-<section class="section">
-  <h2>Levels</h2>
-  <div class="cards cards-{{ v.levels|length }}">
-    {% for lv in v.levels %}
-    <a class="card level-card" href="{{ prefix }}/practices/?level={{ lv.n }}">
-      <span class="badge badge-l{{ lv.n }}">{{ lv.short }}</span>
-      <h3>{{ lv.name }}{% if lv.label %}: {{ lv.label }}{% endif %}</h3>
-      <p>{{ lv.summary }}</p>
-      <p class="card-meta">{{ lv.count }} practices · maximum weighted score {{ lv.max_score }}</p>
-    </a>
-    {% endfor %}
-  </div>
-  {% if v.levels|length > 1 %}<p class="note">Every Level 1 practice also applies at Level 2. Level 2 adds the practices reviewed against the lifecycle phases of <a href="https://www.iso.org/standard/86105.html">ISO/IEC TS 20125-1:2026</a>.</p>{% endif %}
-</section>
-
-<section class="section">
-  <h2>Categories</h2>
-  <div class="cards cards-categories">
-    {% for c in v.categories %}
-    <a class="card" href="{{ prefix }}/practices/#{{ c.slug }}">
-      <p class="card-code">{{ c.code }}</p>
-      <h3>{{ c.name }}</h3>
-      {% if blurbs[c.code] %}<p>{{ blurbs[c.code] }}</p>{% endif %}
-      <p class="card-meta">{{ c.requirements|length }} practices</p>
-    </a>
-    {% endfor %}
+<section class="strip intro">
+  <div class="container">
+    <h1 class="title">Green Software Practices</h1>
+    <p class="lede">An open set of practices for building energy- and resource-efficient software. GSP sets out what organisations should do to build and run sustainable software and AI systems, and what evidence shows it is in place.</p>
+    <p class="actions">
+      <a class="button" href="{{ prefix }}/practices/">Browse the practices</a>
+      <a class="button button-outline" href="#use">Use and cite</a>
+    </p>
+    <p class="intro-version">Version {{ v.version }}{% if v.released %}, released {{ v.date }}{% endif %}. {{ v.requirements|length }} practices in {{ v.categories|length }} categories.</p>
   </div>
 </section>
 
-<section class="section">
-  <h2>How to read a practice</h2>
-  <div class="anatomy">
-    <dl>
-      <div><dt><code>GSP-MEA-04</code></dt><dd>A permanent ID: category code and number. IDs don't change when a practice's levels do.</dd></div>
-      <div><dt>Requirement</dt><dd>The normative statement, written with <em>shall</em>. This is what gets assessed.</dd></div>
-      <div><dt>Rationale and evidence</dt><dd>Informative. Why the practice matters, and examples of evidence that can show it is in place.</dd></div>
-      <div><dt>Assessment scale</dt><dd>The options an assessor chooses from, each with a score from 1 to 0.</dd></div>
-      <div><dt>Priority and weight</dt><dd>Core or Supporting, and the weight that multiplies the score. <a href="{{ root }}/scoring/">How scoring works</a>.</dd></div>
+<section class="strip strip-grey">
+  <div class="container">
+    <h2>Levels</h2>
+    <div class="level-grid">
+      {% for lv in v.levels %}
+      <div class="level-block">
+        {% if lv.n in (1, 2) %}<img src="{{ root }}/static/brand/gsp-level-{{ lv.n }}.svg" alt="GSP {{ lv.label|lower }}, level {{ lv.n }}" width="240" height="64">{% endif %}
+        <p>{{ lv.summary }}</p>
+        <p><a href="{{ prefix }}/practices/?level={{ lv.n }}">See the {{ lv.count }} {{ lv.name }} practices</a></p>
+      </div>
+      {% endfor %}
+    </div>
+    {% if v.levels|length > 1 %}<p class="note">Every Level 1 practice also applies at Level 2. Level 2 adds the practices reviewed against the lifecycle phases of <a href="https://www.iso.org/standard/86105.html">ISO/IEC TS 20125-1:2026</a>.</p>{% endif %}
+  </div>
+</section>
+
+<section class="strip">
+  <div class="container">
+    <h2>Categories</h2>
+    <ul class="category-grid">
+      {% for c in v.categories %}
+      <li>
+        <h3><a href="{{ prefix }}/practices/#{{ c.slug }}">{{ c.name }}</a></h3>
+        {% if blurbs[c.code] %}<p>{{ blurbs[c.code] }}</p>{% endif %}
+        <p class="muted">{{ c.requirements|length }} practices, {{ c.requirements[0].id }} to {{ c.requirements[-1].id }}</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="strip strip-grey">
+  <div class="container">
+    <h2>How to read a practice</h2>
+    <dl class="anatomy">
+      <div><dt>ID</dt><dd>Each practice has a permanent ID made of its category code and a number, such as GSP-MEA-04. The ID stays the same when a practice's levels change.</dd></div>
+      <div><dt>Requirement</dt><dd>The statement that is assessed, written with <em>shall</em>.</dd></div>
+      <div><dt>Rationale</dt><dd>Why the practice matters.</dd></div>
+      <div><dt>Evidence examples</dt><dd>Examples of evidence that can show the practice is in place. Other evidence may also be accepted.</dd></div>
+      <div><dt>Assessment scale</dt><dd>The options an assessor chooses from, such as Implemented, Partially Implemented or Not Implemented.</dd></div>
+      <div><dt>Priority</dt><dd>Core practices are central to their category. Supporting practices strengthen it.</dd></div>
     </dl>
   </div>
 </section>
 
-<section class="section" id="downloads">
-  <h2>Download v{{ v.version }}</h2>
-  <ul class="downloads">
-    {% for d in v.downloads %}
-    <li><a href="{{ v.frozen_prefix }}/downloads/{{ d.name }}" download><span class="dl-kind">{{ d.kind }}</span> {{ d.label }}</a></li>
-    {% endfor %}
-    {% if v.released %}<li><a href="{{ repo_url }}/releases/tag/v{{ v.version }}"><span class="dl-kind">GitHub</span> Release v{{ v.version }}</a></li>{% endif %}
-  </ul>
-</section>
-
-<section class="section split">
-  <div>
-    <h2>Use and cite</h2>
-    <p>You may use, share and adapt the practices, including commercially, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Credit "GreenSeal.dev (https://greenseal.dev)" and say if you made changes.</p>
-    <p>Cite the version you used. Each practice page has a citation for that practice, and the frozen URL <code>{{ base_url }}/v{{ v.version }}/</code> always shows this exact text.</p>
-  </div>
-  <div>
-    <h2>Certification</h2>
-    <p>The practices are open, but only GreenSeal.dev can certify organisations or teams against GSP. Using or adapting the practices does not make an organisation GSP certified.</p>
-    <p><a href="{{ cert_url }}">About GSP certification at GreenSeal.dev</a></p>
+<section class="strip" id="use">
+  <div class="container split">
+    <div>
+      <h2>Use and cite</h2>
+      <p>You may use, share and adapt the practices, including commercially, under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Credit "GreenSeal.dev (https://greenseal.dev)" and say if you made changes.</p>
+      <p>Cite the version you used. Each practice page has a ready-made citation, and every version stays online at its own address, such as {{ base_url|replace('https://', '') }}/v{{ v.version }}/.</p>
+      <p>
+        {% for d in v.downloads %}<a class="button button-outline" href="{{ v.frozen_prefix }}/downloads/{{ d.name }}" download>Download {{ d.kind }}</a> {% endfor %}
+        {% if v.released %}<a class="button button-outline" href="{{ repo_url }}/releases/tag/v{{ v.version }}">GitHub release</a>{% endif %}
+      </p>
+    </div>
+    <div>
+      <h2>Certification</h2>
+      <p>The practices are open, but only GreenSeal.dev can certify organisations or teams against GSP. Using or adapting the practices does not make an organisation GSP certified.</p>
+      <p><a class="button" href="{{ cert_url }}">About GSP certification</a></p>
+    </div>
   </div>
 </section>
 {% endblock %}
