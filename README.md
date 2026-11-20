@@ -8,13 +8,16 @@ GSP defines weighted, evidence-based requirements for assessing how organisation
 
 Requirements are grouped into five categories:
 
-| Category | Level 2 requirements |
-| --- | --- |
-| Governance & Culture | 7 |
-| Training & Knowledge | 6 |
-| Measurement & Observability | 6 |
-| Software & Architecture Practices | 8 |
-| Continuous Improvement | 5 |
+| Category | Level 1 | Level 2 |
+| --- | --- | --- |
+| Governance & Culture | 5 | 7 |
+| Training & Knowledge | 6 | 6 |
+| Measurement & Observability | 5 | 6 |
+| Software & Architecture Practices | 5 | 8 |
+| Continuous Improvement | 4 | 5 |
+| **Total** | **25** | **32** |
+
+Every Level 1 requirement also applies at Level 2. The seven requirements that apply at Level 2 only are the ones reviewed against the ISO/IEC TS 20125-1:2026 lifecycle phases (requirements gathering, design, operations and end of life).
 
 Each requirement includes:
 
@@ -24,7 +27,7 @@ Each requirement includes:
 - a priority (`Core` or `Supporting`) and a weight
 - the GSP level(s) it applies to (`levels`)
 
-Requirement IDs follow the pattern `GSP-L<level>-<CATEGORY>-<nn>`, where the level is the one at which the requirement was first introduced (e.g. `GSP-L2-MEA-04`).
+Requirement IDs follow the pattern `GSP-<CATEGORY>-<nn>` (e.g. `GSP-MEA-04`). IDs do not encode a level, so a requirement keeps its ID if its levels change. Releases up to v1.0.1 used `GSP-L2-<CATEGORY>-<nn>`.
 
 ## Repository contents
 
@@ -45,11 +48,12 @@ pip install -r requirements.txt
 # Level 2 audit (default) -> GSP_L2_Audit.xlsx
 python src/convert_cert_2.py
 
+# Level 1 audit -> GSP_L1_Audit.xlsx
+python src/convert_cert_2.py --level 1
+
 # Custom input and output paths
 python src/convert_cert_2.py --level 2 gsp_requirements.yml my_audit.xlsx
 ```
-
-The converter also accepts `--level 1`, but no Level 1 requirements have been published yet.
 
 The generated workbook contains:
 
@@ -70,7 +74,7 @@ Citation metadata is in [`CITATION.cff`](CITATION.cff), and GitHub shows it unde
 @misc{greenseal_gsp,
   author  = {{GreenSeal, Lda.}},
   title   = {GreenSeal Green Software Practices (GSP)},
-  version = {1.0.1},
+  version = {1.1.0},
   year    = {2026},
   url     = {https://greenseal.dev}
 }

@@ -1,15 +1,17 @@
 # © GreenSeal, Lda. — https://greenseal.dev
 # SPDX-License-Identifier: CC-BY-4.0
-version: 1.0.1
+version: 1.1.0
 # 'levels' is REQUIRED on every requirement — the converter will error if it is missing.
-# levels: [2]      → L2 audit only  (existing requirements)
-# levels: [1, 2]   → appears in both L1 and L2 audit outputs
-# levels: [1]      → L1 audit only
+# levels: [1, 2]   → applies at Level 1 and Level 2
+# levels: [2]      → applies at Level 2 only
+# levels: [1]      → applies at Level 1 only
+# IDs follow GSP-<CATEGORY>-<nn> and carry no level. They are permanent once
+# published: a new requirement takes the next free number in its category.
 categories:
   - category: Governance & Culture
     requirements:
-      - id: GSP-L2-GOV-01
-        levels: [2]
+      - id: GSP-GOV-01
+        levels: [1, 2]
         title: Organisational Awareness of Software Sustainability
         requirement: >
           The organisation shall promote internal awareness of software
@@ -28,8 +30,8 @@ categories:
           - Not Implemented
         priority: Core
         weight: 2
-      - id: GSP-L2-GOV-02
-        levels: [2]
+      - id: GSP-GOV-02
+        levels: [1, 2]
         title: Sustainability in Technical Decision-Making
         requirement: >
           The organisation shall consider sustainability aspects when making
@@ -46,8 +48,8 @@ categories:
           - Not Implemented
         priority: Core
         weight: 3
-      - id: GSP-L2-GOV-03
-        levels: [2]
+      - id: GSP-GOV-03
+        levels: [1, 2]
         title: Developer Engagement in Resource-Efficient Practices
         requirement: >
           The organisation shall encourage developers and technical staff to
@@ -69,8 +71,8 @@ categories:
           - Not Implemented
         priority: Core
         weight: 2
-      - id: GSP-L2-GOV-04
-        levels: [2]
+      - id: GSP-GOV-04
+        levels: [1, 2]
         title: Communication of Sustainability Goals
         requirement: >
           The organisation shall communicate sustainability-related
@@ -89,8 +91,8 @@ categories:
           - Not Implemented
         priority: Core
         weight: 2
-      - id: GSP-L2-GOV-05
-        levels: [2]
+      - id: GSP-GOV-05
+        levels: [1, 2]
         title: Assigned Responsibility for Software Sustainability
         requirement: >
           The organisation shall assign responsibility for promoting or
@@ -110,7 +112,7 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-GOV-06
+      - id: GSP-GOV-06
         levels: [2]
         title: Sustainability Requirements at Project Inception
         requirement: >
@@ -136,7 +138,7 @@ categories:
         weight: 2
         ts_alignment: "ISO/IEC TS 20125-1:2026 – Requirements gathering phase"
 
-      - id: GSP-L2-GOV-07
+      - id: GSP-GOV-07
         levels: [2]
         title: Decommissioning Responsibility
         requirement: >
@@ -167,8 +169,8 @@ categories:
       minimum_core_requirements: 2
       allow_partial_credit: true
     requirements:
-      - id: GSP-L2-TRN-01
-        levels: [2]
+      - id: GSP-TRN-01
+        levels: [1, 2]
         title: Formal Sustainability Training
         requirement: >
           The organisation shall provide structured training on green software
@@ -188,8 +190,8 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-TRN-02
-        levels: [2]
+      - id: GSP-TRN-02
+        levels: [1, 2]
         title: Sustainability Onboarding for Technical Roles
         requirement: >
           The organisation shall introduce new technical employees to documented
@@ -208,8 +210,8 @@ categories:
         priority: Core
         weight: 2
 
-      - id: GSP-L2-TRN-03
-        levels: [2]
+      - id: GSP-TRN-03
+        levels: [1, 2]
         title: Sustainability Considerations in Recruitment
         requirement: >
           The organisation shall consider sustainability-related software or AI
@@ -228,8 +230,8 @@ categories:
         priority: Supporting
         weight: 2
 
-      - id: GSP-L2-TRN-04
-        levels: [2]
+      - id: GSP-TRN-04
+        levels: [1, 2]
         title: Sustainability in Continuous Professional Development
         requirement: >
           The organisation shall include resource-efficient software or AI development
@@ -248,8 +250,8 @@ categories:
         priority: Core
         weight: 2
 
-      - id: GSP-L2-TRN-05
-        levels: [2]
+      - id: GSP-TRN-05
+        levels: [1, 2]
         title: Maintained Best Practice Guidelines
         requirement: >
           The organisation shall maintain and periodically update documented best
@@ -268,8 +270,8 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-TRN-06
-        levels: [2]
+      - id: GSP-TRN-06
+        levels: [1, 2]
         title: Documentation of Sustainability Improvements
         requirement: >
           The organisation shall document energy or performance improvements resulting
@@ -291,8 +293,8 @@ categories:
 
   - category: Measurement & Observability
     requirements:
-      - id: GSP-L2-MEA-01
-        levels: [2]
+      - id: GSP-MEA-01
+        levels: [1, 2]
         title: Systematic Resource Usage Measurement
         requirement: >
           The organisation shall systematically measure and store resource usage
@@ -313,8 +315,8 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-MEA-02
-        levels: [2]
+      - id: GSP-MEA-02
+        levels: [1, 2]
         title: Energy or Carbon Monitoring
         requirement: >
           The organisation shall monitor or estimate energy consumption and/or
@@ -334,8 +336,8 @@ categories:
         priority: Core
         weight: 4
 
-      - id: GSP-L2-MEA-03
-        levels: [2]
+      - id: GSP-MEA-03
+        levels: [1, 2]
         title: Automated Sustainability Observability
         requirement: >
           The organisation shall maintain automated dashboards or tooling that
@@ -355,8 +357,8 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-MEA-04
-        levels: [2]
+      - id: GSP-MEA-04
+        levels: [1, 2]
         title: Resource Usage Attribution Capability
         requirement: >
           The organisation shall attribute software resource usage and/or energy
@@ -392,8 +394,8 @@ categories:
         priority: Supporting
         weight: 4
 
-      - id: GSP-L2-MEA-05
-        levels: [2]
+      - id: GSP-MEA-05
+        levels: [1, 2]
         title: Lifecycle Resource Profiling
         requirement: >
           The organisation shall conduct performance and resource profiling at
@@ -413,7 +415,7 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-MEA-06
+      - id: GSP-MEA-06
         levels: [2]
         title: Decommissioning Resource Footprint
         requirement: >
@@ -440,8 +442,8 @@ categories:
 
   - category: Software & Architecture Practices
     requirements:
-      - id: GSP-L2-ARC-01
-        levels: [2]
+      - id: GSP-ARC-01
+        levels: [1, 2]
         title: Resource Efficiency in Architecture and Design
         requirement: >
           The organisation shall explicitly consider resource efficiency during
@@ -460,8 +462,8 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-ARC-02
-        levels: [2]
+      - id: GSP-ARC-02
+        levels: [1, 2]
         title: Efficiency Trade-off Evaluation
         requirement: >
           The organisation shall evaluate trade-offs between resource efficiency
@@ -481,8 +483,8 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-ARC-03
-        levels: [2]
+      - id: GSP-ARC-03
+        levels: [1, 2]
         title: Optimisation of Data Pipelines and AI/ML Models
         requirement: >
           The organisation shall apply optimisation techniques to data pipelines
@@ -502,8 +504,8 @@ categories:
         priority: Supporting
         weight: 3
 
-      - id: GSP-L2-ARC-04
-        levels: [2]
+      - id: GSP-ARC-04
+        levels: [1, 2]
         title: Reduction of Unnecessary Computation and Data Movement
         requirement: >
           The organisation shall identify and reduce unnecessary computation,
@@ -523,8 +525,8 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-ARC-05
-        levels: [2]
+      - id: GSP-ARC-05
+        levels: [1, 2]
         title: Efficiency Review of Dependencies and Third-Party Components
         requirement: >
           The organisation shall periodically review software dependencies and
@@ -544,7 +546,7 @@ categories:
         priority: Supporting
         weight: 2
 
-      - id: GSP-L2-ARC-06
+      - id: GSP-ARC-06
         levels: [2]
         title: Feature Necessity and Scope Assessment
         requirement: >
@@ -570,7 +572,7 @@ categories:
         weight: 2
         ts_alignment: "ISO/IEC TS 20125-1:2026 – Requirements gathering phase"
 
-      - id: GSP-L2-ARC-07
+      - id: GSP-ARC-07
         levels: [2]
         title: Infrastructure and Hosting Sustainability
         requirement: >
@@ -596,7 +598,7 @@ categories:
         weight: 3
         ts_alignment: "ISO/IEC TS 20125-1:2026 – Design phase"
 
-      - id: GSP-L2-ARC-08
+      - id: GSP-ARC-08
         levels: [2]
         title: Carbon-Aware Workload Management
         requirement: >
@@ -624,8 +626,8 @@ categories:
 
   - category: Continuous Improvement
     requirements:
-      - id: GSP-L2-IMP-01
-        levels: [2]
+      - id: GSP-IMP-01
+        levels: [1, 2]
         title: Periodic Review of Efficiency-Related Design Decisions
         requirement: >
           The organisation shall periodically revisit software and AI design or
@@ -645,8 +647,8 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-IMP-02
-        levels: [2]
+      - id: GSP-IMP-02
+        levels: [1, 2]
         title: Internal Sharing of Efficiency Improvement Lessons
         requirement: >
           The organisation shall share lessons learned internally from initiatives
@@ -665,8 +667,8 @@ categories:
         priority: Core
         weight: 2
 
-      - id: GSP-L2-IMP-03
-        levels: [2]
+      - id: GSP-IMP-03
+        levels: [1, 2]
         title: Documented Evidence of Efficiency Improvements
         requirement: >
           The organisation shall maintain documented examples demonstrating reduced
@@ -686,8 +688,8 @@ categories:
         priority: Core
         weight: 3
 
-      - id: GSP-L2-IMP-04
-        levels: [2]
+      - id: GSP-IMP-04
+        levels: [1, 2]
         title: External Knowledge Sharing on Software Sustainability
         requirement: >
           The organisation should share lessons learned or best practices related to
@@ -707,7 +709,7 @@ categories:
         priority: Supporting
         weight: 2
 
-      - id: GSP-L2-IMP-05
+      - id: GSP-IMP-05
         levels: [2]
         title: Post-Service Sustainability Retrospective
         requirement: >

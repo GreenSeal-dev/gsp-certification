@@ -12,7 +12,7 @@ Contributions are welcome through issues and pull requests:
 When changing `gsp_requirements.yml`:
 
 - every requirement needs a `levels` field (see the comment at the top of the file)
-- new requirement IDs follow `GSP-L<level>-<CATEGORY>-<nn>`, where the level is the one at which the requirement is first introduced
+- new requirement IDs follow `GSP-<CATEGORY>-<nn>` and take the next free number in their category. IDs carry no level, and published IDs are never renumbered or reused
 - check that the audit checklist still builds: `python src/convert_cert_2.py`
 
 ## How decisions are made

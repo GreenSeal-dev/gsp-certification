@@ -13,8 +13,8 @@ abstract: >-
 authors:
   - name: "GreenSeal.dev"
     website: "https://greenseal.dev"
-version: 1.0.1
-date-released: 2026-10-28
+version: 1.1.0
+date-released: 2026-11-20
 license: CC-BY-4.0
 repository-code: "https://github.com/GreenSeal-dev/gsp-certification"
 url: "https://greenseal.dev"
