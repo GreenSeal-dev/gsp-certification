@@ -37,4 +37,4 @@
   <p class="empty" id="empty" hidden>No practices match these filters. Clear the search or choose another level, category or priority.</p>
 </div>
 {% endblock %}
-{% block scripts %}<script src="{{ root }}/static/filter.js" defer></script>{% endblock %}
+{% block scripts %}<script src="{{ root }}/static/filter.js?v={{ asset_v['filter.js'] }}" defer></script>{% endblock %}

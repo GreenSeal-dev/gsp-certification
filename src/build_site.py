@@ -10,6 +10,7 @@ latest release is rendered again at the site root. Run from the repository root:
     python src/build_site.py --base-url http://localhost:8000 --include-working-tree
     python -m http.server -d _site 8000
 """
+import hashlib
 import re
 import shutil
 import subprocess
@@ -178,7 +179,10 @@ def main(out, base_url, include_working_tree):
 
     env = Environment(loader=FileSystemLoader(SITE_SRC / "templates"),
                       autoescape=select_autoescape(), trim_blocks=True, lstrip_blocks=True)
-    env.globals.update(root=root, base_url=base_url, repo_url=REPO_URL, cert_url=CERT_URL,
+    # Content hashes in asset URLs, so browsers fetch new CSS/JS after a change.
+    asset_v = {name: hashlib.sha1((SITE_SRC / "static" / name).read_bytes()).hexdigest()[:8]
+               for name in ("style.css", "filter.js")}
+    env.globals.update(asset_v=asset_v, root=root, base_url=base_url, repo_url=REPO_URL, cert_url=CERT_URL,
                        latest=latest, versions=versions, released=released,
                        blurbs=blurbs, level_info=LEVELS)
 
