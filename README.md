@@ -68,6 +68,16 @@ By default, scores are spread linearly from 1.0 for the first option on the asse
 
 The public site at [gsp.greenseal.dev](https://gsp.greenseal.dev) is generated from this repository by `src/build_site.py` (Python + Jinja2, templates in `site/`). It has a page per practice, a filterable list of all practices, and a download of `gsp_requirements.yml` as tagged for every version. Scoring (weights, scores, completion rules) is still in beta, so the pages don't display it.
 
+The site also explains the certification scheme and lists certified organisations:
+
+| Path | Description |
+| --- | --- |
+| `site/pages/*.md` | Methodology, FAQ and Terms of Certification (Markdown with front matter) |
+| `site/certification_levels.yml` | Certification statuses (Self-assessed, Verified, Verified+), their validity and badges |
+| `site/certified/<slug>.yml` | One file per certified organisation; its verification page is `/certified/<slug>/` |
+
+To list a newly certified organisation, add a YAML file to `site/certified/` with `name`, `certification` (a status id), `certification_body`, `certified_on`, `valid_until`, `domains` and `website`. Don't add contact details: everything in this repository is public. Expiry is worked out at build time, and the site rebuilds daily.
+
 Every release tag is built as a frozen copy under `/vX.Y.Z/`, and the latest release is also served at the root. The GitHub Actions workflow in `.github/workflows/site.yml` deploys the site on every push to `main` and every new tag.
 
 ```bash

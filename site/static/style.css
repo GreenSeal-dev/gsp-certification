@@ -243,3 +243,36 @@ a.box:hover h2 { text-decoration: underline; }
   .side-box { break-inside: avoid; background: none; border: 1px solid #ccc; }
   .requirement { break-inside: avoid; }
 }
+
+/* Nav call to action */
+.main-menu a.nav-cta { margin-left: 8px; padding: 6px 12px; border: 1px solid var(--primary); border-radius: 4px; }
+.main-menu a.nav-cta:hover, .main-menu a.nav-cta[aria-current="page"] { background: var(--primary); color: var(--white); text-decoration: none; }
+@media (max-width: 575px) { .main-menu a.nav-cta { margin-left: 0; } }
+
+/* Certification statuses */
+.cert-heading { margin-top: 16px; }
+.status-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin: 20px 0 40px; }
+.status { display: flex; flex-direction: column; background: var(--white-offset); border-radius: 12px; padding: 24px; scroll-margin-top: 16px; }
+.status img { display: block; width: 200px; height: auto; margin-bottom: 16px; }
+.status h3 { font-size: 22px; }
+.status ul { list-style: disc; padding-left: 20px; margin-bottom: 16px; }
+.status li { color: var(--steel); line-height: 24px; margin-bottom: 4px; }
+.status-meta { font-size: 0.92rem; }
+.status-note { font-size: 0.92rem; color: var(--primary-dark); }
+.status .button { margin-top: auto; }
+.status p:last-child { margin: auto 0 0; }
+.cert-more { margin-top: 8px; }
+
+/* Registry and verification pages */
+.registry tbody th a { font-weight: 700; }
+.expired { display: inline-block; font-size: 0.75rem; padding: 2px 8px; border-radius: 6px; background: #f6e7e4; color: #8a2d1f; margin-left: 6px; }
+.verify { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; padding: 24px; border-radius: 12px; background: var(--white-offset); border-left: 6px solid var(--level-2); margin: 8px 0 24px; }
+.verify-expired { border-left-color: #b44a3a; }
+.verify img { width: 220px; height: auto; }
+.verify h1 { margin: 0 0 6px; }
+.verify-state { margin: 0; color: var(--black); font-weight: 700; }
+.verify-expired .verify-state { color: #8a2d1f; }
+.verify-facts { margin-bottom: 24px; }
+.prose h2 { margin-top: 32px; }
+.prose ul ul { margin-bottom: 0; }
+iframe.tally { border: 0; margin-top: 8px; }

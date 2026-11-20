@@ -30,13 +30,14 @@ from gsp_data import parse_requirements  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 SITE_SRC = ROOT / "site"
 REPO_URL = "https://github.com/GreenSeal-dev/gsp-certification"
-CERT_URL = "https://www.greenseal.dev/gsp/"
-LEVELS = {
-    1: {"name": "Level 1", "short": "L1", "label": "Self-assessed",
-        "summary": "The organisation assesses its own practices against the Level 1 practices."},
-    2: {"name": "Level 2", "short": "L2", "label": "Verified",
-        "summary": "Evidence for every Level 2 practice is independently reviewed."},
-}
+SERVICE_URL = "https://www.greenseal.dev/services/gsp-certification/"
+STATUSES = yaml.safe_load((SITE_SRC / "certification_levels.yml").read_text(encoding="utf-8"))
+# Practice levels, labelled by the first certification status assessed against each one.
+LEVELS = {}
+for _s in STATUSES:
+    LEVELS.setdefault(_s["practices_level"], {
+        "name": f"Level {_s['practices_level']}", "short": f"L{_s['practices_level']}",
+        "label": _s["name"], "summary": _s["summary"], "badge": _s["badge"]})
 ID_RE = re.compile(r"^GSP-(?:L\d-)?([A-Z]+)-(\d+)$")
 ISO_PREFIX = re.compile(r"^ISO/IEC TS 20125-1:2026\s*[–-]\s*")
 
@@ -131,6 +132,32 @@ def build_model(src, root):
     }
 
 
+def load_pages():
+    """Markdown pages in site/pages/: (slug, front matter, body)."""
+    pages = []
+    for path in sorted((SITE_SRC / "pages").glob("*.md")):
+        _, front, body = path.read_text(encoding="utf-8").split("---\n", 2)
+        pages.append((path.stem, yaml.safe_load(front), body))
+    return pages
+
+
+def load_certified(today):
+    """Certified organisations from site/certified/*.yml, newest first."""
+    by_id = {s["id"]: s for s in STATUSES}
+    labels = {"software": "Sustainable software engineering", "ai": "Sustainable AI and ML practices"}
+    orgs = []
+    for path in sorted((SITE_SRC / "certified").glob("*.yml")):
+        o = yaml.safe_load(path.read_text(encoding="utf-8"))
+        if o["certification"] not in by_id:
+            raise click.ClickException(f"{path.name}: unknown certification {o['certification']!r}")
+        o.update(slug=path.stem, status=by_id[o["certification"]],
+                 certified_on=str(o["certified_on"]), valid_until=str(o["valid_until"]))
+        o["expired"] = o["valid_until"] < today
+        o["domain_list"] = [labels.get(k, k) for k, on in (o.get("domains") or {}).items() if on]
+        orgs.append(o)
+    return sorted(orgs, key=lambda o: o["certified_on"], reverse=True)
+
+
 def check_links(out, root):
     """Fail if any internal link points to a file that was not generated."""
     missing = set()
@@ -182,7 +209,8 @@ def main(out, base_url, include_working_tree):
     # Content hashes in asset URLs, so browsers fetch new CSS/JS after a change.
     asset_v = {name: hashlib.sha1((SITE_SRC / "static" / name).read_bytes()).hexdigest()[:8]
                for name in ("style.css", "filter.js")}
-    env.globals.update(asset_v=asset_v, root=root, base_url=base_url, repo_url=REPO_URL, cert_url=CERT_URL,
+    env.globals.update(asset_v=asset_v, root=root, base_url=base_url, repo_url=REPO_URL,
+                       service_url=SERVICE_URL, statuses=STATUSES,
                        latest=latest, versions=versions, released=released,
                        blurbs=blurbs, level_info=LEVELS)
 
@@ -238,7 +266,30 @@ def main(out, base_url, include_working_tree):
           page_title="Licence and certification", nav="about")
     write("/404.html", "404.html", **ctx, canonical=None, page_title="Page not found", nav=None)
 
-    pages = ["/", "/practices/", "/versions/", "/about/"] + \
+    # Site-wide pages about GSP and its certification scheme (root only).
+    level2_count = sum(2 in r["levels"] for r in latest["requirements"])
+    site_pages = ["/certification/", "/self-assessment/", "/certified/"]
+    for slug, front, body in load_pages():
+        if not front.get("verbatim"):
+            body = env.from_string(body).render(**ctx, level2_count=level2_count)
+        page = {**front, "html": markdown.markdown(body, extensions=["attr_list"])}
+        write(f"/{slug}/", "page.html", **ctx, page=page, canonical=f"{base_url}/{slug}/",
+              page_title=front["title"], nav=front.get("nav"))
+        site_pages.append(f"/{slug}/")
+    write("/certification/", "certification.html", **ctx, canonical=f"{base_url}/certification/",
+          page_title="Certification", nav="certification")
+    write("/self-assessment/", "self-assessment.html", **ctx,
+          canonical=f"{base_url}/self-assessment/", page_title="Self-assessment", nav="self-assessment")
+    orgs = load_certified(date.today().isoformat())
+    write("/certified/", "certified.html", **ctx, orgs=orgs, canonical=f"{base_url}/certified/",
+          page_title="Certified organisations", nav="certified")
+    for o in orgs:
+        write(f"/certified/{o['slug']}/", "certified-org.html", **ctx, o=o,
+              canonical=f"{base_url}/certified/{o['slug']}/", page_title=f"{o['name']}: GSP {o['status']['name']}",
+              nav="certified")
+        site_pages.append(f"/certified/{o['slug']}/")
+
+    pages = ["/", "/practices/", "/versions/", "/about/"] + site_pages + \
         [f"/practices/{r['id']}/" for r in latest["requirements"]]
     (out / "sitemap.xml").write_text(
         '<?xml version="1.0" encoding="UTF-8"?>\n'

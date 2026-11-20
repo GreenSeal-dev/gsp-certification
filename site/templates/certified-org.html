@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block description %}Verification of the GSP {{ o.status.name }} certification of {{ o.name }}.{% endblock %}
+{% block content %}
+<div class="container page prose">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="{{ root }}/certified/">Certified organisations</a> / {{ o.name }}</nav>
+  <div class="verify{% if o.expired %} verify-expired{% endif %}">
+    <img src="{{ root }}/static/brand/{{ o.status.badge }}" alt="GSP {{ o.status.name|lower }} badge" width="220" height="58">
+    <div>
+      <h1>{{ o.name }}</h1>
+      <p class="verify-state">{% if o.expired %}This certification expired on {{ o.valid_until }}.{% else %}This certification is valid until {{ o.valid_until }}.{% endif %}</p>
+    </div>
+  </div>
+  <dl class="anatomy verify-facts">
+    <div><dt>Status</dt><dd><a href="{{ root }}/certification/#{{ o.status.id }}">GSP {{ o.status.name }}</a>. {{ o.status.registry }}</dd></div>
+    <div><dt>Issued by</dt><dd>{{ o.certification_body }}</dd></div>
+    <div><dt>Certified on</dt><dd>{{ o.certified_on }}</dd></div>
+    <div><dt>Valid until</dt><dd>{{ o.valid_until }}</dd></div>
+    {% if o.website %}<div><dt>Website</dt><dd><a href="{{ o.website }}">{{ o.website }}</a></dd></div>{% endif %}
+    {% if o.domain_list %}<div><dt>Certified domains</dt><dd>{{ o.domain_list|join(', ') }}</dd></div>{% endif %}
+    {% if o.public_report %}<div><dt>Public report</dt><dd><a href="{{ o.public_report }}">View the public report</a></dd></div>{% endif %}
+  </dl>
+  <p class="note">GSP certification reflects the organisation's sustainable software and AI practices at the time of assessment. It is operated by GreenSeal, Lda. and is subject to the <a href="{{ root }}/terms/">Terms of Certification</a>.</p>
+</div>
+{% endblock %}

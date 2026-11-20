@@ -1,0 +1,24 @@
+# Certification statuses. One source for the home page, /certification/ and the
+# registry. `practices_level` is the GSP level whose practices the status is
+# assessed against (Verified+ uses the Level 2 practices).
+- id: self-assessed
+  name: Self-assessed
+  practices_level: 1
+  badge: gsp-level-1.svg
+  validity_months: 6
+  summary: The organisation assesses its own practices against the Level 1 practices.
+  registry: Self-assessed sustainable software practices.
+- id: verified
+  name: Verified
+  practices_level: 2
+  badge: gsp-level-2.svg
+  validity_months: 12
+  summary: Evidence for every Level 2 practice is independently reviewed.
+  registry: Independently verified sustainable software practices.
+- id: verified-plus
+  name: Verified+
+  practices_level: 2
+  badge: gsp-level-3.svg
+  validity_months: 18
+  summary: Level 2 verification at the end of a support engagement with GreenSeal.dev.
+  registry: Independently verified sustainable software practices, reached with continuous support.

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block description %}How GSP certification works: the Self-assessed, Verified and Verified+ statuses, their validity, and how to get certified.{% endblock %}
+{% block content %}
+<div class="container page">
+  <div class="prose">
+    <h1>Certification</h1>
+    <p class="lede">The practices are open to everyone. Certification against them is operated by GreenSeal.dev, the only body that can certify organisations or teams against GSP.</p>
+    <p>GSP certifies <strong>organisational practices</strong>, not individual products. It applies to software-intensive systems, cloud-native applications and AI/ML workloads, and is meant for technology companies, SaaS providers, organisations running AI/ML workloads, and engineering teams that want to reduce energy use, cost and carbon impact.</p>
+  </div>
+
+  <h2 class="cert-heading">Certification statuses</h2>
+  <div class="status-grid">
+    {% for s in statuses %}
+    <section class="status" id="{{ s.id }}">
+      <img src="{{ root }}/static/brand/{{ s.badge }}" alt="GSP {{ s.name|lower }} badge" width="220" height="58">
+      <h3>{{ s.name }}</h3>
+      <p class="status-meta">Assessed against the <a href="{{ root }}/practices/?level={{ s.practices_level }}">Level {{ s.practices_level }} practices</a>. Valid for {{ s.validity_months }} months.</p>
+      {% if s.id == 'self-assessed' %}
+      <p><strong>For</strong> organisations starting their sustainability journey. Open to everyone, free of charge.</p>
+      <ul>
+        <li>Self-assessment questionnaire. It currently uses its own, lighter questionnaire rather than the Level 1 practices one by one.</li>
+        <li>Public Self-assessed badge and certification page</li>
+      </ul>
+      <p class="status-note">Based only on self-declared information and not independently verified. Not suitable for strong external claims.</p>
+      <p><a class="button" href="{{ root }}/self-assessment/">Start the self-assessment</a></p>
+      {% elif s.id == 'verified' %}
+      <p><strong>For</strong> organisations that want external credibility. Paid.</p>
+      <ul>
+        <li>Independent review of evidence by GreenSeal.dev against the Level 2 practices</li>
+        <li>Verified badge, awarded only if the criteria are met</li>
+        <li>Public certification page</li>
+        <li>Technical assessment report with gaps and recommendations, whatever the outcome</li>
+        <li>Optional public summary report</li>
+      </ul>
+      <p class="status-note">Suitable for organisations making public sustainability claims.</p>
+      <p><a class="button button-outline" href="{{ service_url }}">Request verification</a></p>
+      {% elif s.id == 'verified-plus' %}
+      <p><strong>For</strong> organisations aiming for leadership. Custom engagement, 6 to 12 months recommended.</p>
+      <ul>
+        <li>The same Level 2 verification as Verified, at the end of a support engagement with GreenSeal.dev</li>
+        <li>Verified+ In Progress badge during the engagement</li>
+        <li>Verified+ badge only after passing the formal verification review</li>
+      </ul>
+      <p class="status-note">Organisations that don't meet the criteria at the end keep the benefits of the engagement, but don't receive the badge.</p>
+      <p><a class="button button-outline" href="{{ service_url }}">About the engagement</a></p>
+      {% endif %}
+    </section>
+    {% endfor %}
+  </div>
+
+  <div class="prose cert-more">
+    <h2>Which version of GSP</h2>
+    <p>Each certification is assessed against a specific published version of GSP, such as v{{ latest.version }}. A later version doesn't change the version an existing certification was granted against. Renewals are assessed against the version current at the time of renewal. Every version stays online on the <a href="{{ root }}/versions/">versions page</a>.</p>
+
+    <h2>Badges and verification</h2>
+    <p>Certified organisations display their badge with a link to their verification page in the <a href="{{ root }}/certified/">registry of certified organisations</a>. The badge may only be used as provided and while the certification is valid. Misuse or misleading claims can lead to revocation.</p>
+    <p>Certification is subject to the <a href="{{ root }}/terms/">Terms of Certification</a>. Questions about certification: <a href="mailto:info@greenseal.dev">info@greenseal.dev</a>.</p>
+  </div>
+</div>
+{% endblock %}

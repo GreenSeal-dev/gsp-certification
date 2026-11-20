@@ -1,0 +1,10 @@
+# Certified organisation. The file name is the URL slug: /certified/<file name>/
+name: Alpha
+certification: self-assessed
+certification_body: GreenSeal, Lda.
+certified_on: '2026-02-18'
+valid_until: '2026-08-18'
+domains:
+  software: true
+  ai: false
+website: https://www.alpha.org

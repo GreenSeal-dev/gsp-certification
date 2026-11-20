@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block description %}Self-assess your organisation for GSP Self-assessed certification.{% endblock %}
+{% block content %}
+<div class="container page prose">
+  <h1>Self-assessment</h1>
+  <p class="lede">Complete this questionnaire to apply for GSP Self-assessed certification. It is free and takes a few minutes.</p>
+  <p>The self-assessment currently uses its own, lighter questionnaire, separate from the <a href="{{ root }}/practices/?level=1">Level 1 practices</a>. By submitting it, you agree to the <a href="{{ root }}/terms/">Terms of Certification</a>.</p>
+  <iframe class="tally" data-tally-src="https://tally.so/embed/q4aJ87?alignLeft=1&amp;hideTitle=1&amp;transparentBackground=1&amp;dynamicHeight=1&amp;formEventsForwarding=1" loading="lazy" width="100%" height="400" title="GSP self-assessment"></iframe>
+  <noscript><p><a href="https://tally.so/r/q4aJ87">Open the self-assessment form</a>.</p></noscript>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+{% endblock %}

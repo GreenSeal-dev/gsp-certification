@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block description %}Organisations certified against Green Software Practices (GSP), with links to their verification pages.{% endblock %}
+{% block content %}
+<div class="container page prose">
+  <h1>Certified organisations</h1>
+  <p class="lede">Organisations that hold or have held a GSP certification. Each one has a verification page, which is where its badge links to.</p>
+  {% if orgs %}
+  <table class="versions-table registry">
+    <thead><tr><th scope="col">Organisation</th><th scope="col">Status</th><th scope="col">Certified on</th><th scope="col">Valid until</th></tr></thead>
+    <tbody>
+    {% for o in orgs %}
+      <tr>
+        <th scope="row"><a href="{{ root }}/certified/{{ o.slug }}/">{{ o.name }}</a></th>
+        <td>{{ o.status.name }}</td>
+        <td>{{ o.certified_on }}</td>
+        <td>{{ o.valid_until }}{% if o.expired %} <span class="expired">Expired</span>{% endif %}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No organisations are listed yet.</p>
+  {% endif %}
+  <p class="note">An expired certification was valid until the date shown and has not been renewed. See <a href="{{ root }}/certification/">Certification</a> for what each status means.</p>
+</div>
+{% endblock %}
